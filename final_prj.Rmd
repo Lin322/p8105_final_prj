@@ -3,9 +3,12 @@ title: "Consumer product-related injuries in the United States"
 output: github_document
 ---
 
-##Group Member:
+## Group Member:
 
 * Lin Feng (LF2649)
+* Eric Sun (ES3201)
+* Elizabeth Park (EP2899)
+* Daniel Ojeranti (DO2381)
 
 ## The motivation for this project
 
@@ -23,8 +26,6 @@ library(neiss)
 ```
 
 
-
-
 ```{r}
 data("injuries")
 data("population")
@@ -35,3 +36,15 @@ head(injuries)
 head(products)
 ```
 
+## The intended final products
+
+The intended final product will be a website contains the descriptive information and visualization we got from NEISS data. We plan to add some text descriptions with inline codes in the index page to show the motivation for this project, a brief introduction to the NEISS dataset, the general results of product-related injuries and other necessary information. Plots and tables will be inserted within texts to give a straight-forward display. We expect several other pages connected to the index page and will display the key results we found in more details. The linkage to NEISS website the brief introduction to group member will be added in the home page.  
+
+
+## The planned analyses / visualizations / coding challenges
+
+We will firstly import and tidy it. Then we are going to look at the distribution of injuries related to different categories of products, giving a descriptive summary of the size and structure of the dataset. After the general analysis, we will try to find some special pattern or unusual distribution within the dataset. For example, we want to know which category of product is related to the highest probability of injury, or which age range is the most vulnerable to product-related injuries.  
+
+Visualization will be achieved via both general plots and interactive plots. We will choose the most appropriate plot form for each result. If applicable, we prefer interactive plot to general plot. 
+
+The possible coding challenges could be connected the three datasets together for comprehensive analysis, because there is no common columns can be used for join. 
