@@ -5,10 +5,12 @@ output: github_document
 
 ## Group Member:
 
-* Lin Feng (LF2649)
-* Eric Sun (ES3201)
-* Elizabeth Park (EP2899)
 * Daniel Ojeranti (DO2381)
+* Lin Feng (LF2649)
+* Elizabeth Park (EP2899)
+* Eric Sun (ES3201)
+
+
 
 ## The motivation for this project
 
@@ -31,9 +33,6 @@ data("injuries")
 data("population")
 data("products")
 
-head(population)
-head(injuries)
-head(products)
 ```
 
 ## The intended final products
