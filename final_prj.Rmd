@@ -1,16 +1,14 @@
----
+ ---
 title: "Consumer product-related injuries in the United States"
 output: github_document
 ---
 
 ## Group Member:
 
-* Daniel Ojeranti (DO2381)
 * Lin Feng (LF2649)
-* Elizabeth Park (EP2899)
 * Eric Sun (ES3201)
-
-
+* Elizabeth Park (EP2899)
+* Daniel Ojeranti (DO2381)
 
 ## The motivation for this project
 
@@ -32,7 +30,9 @@ library(neiss)
 data("injuries")
 data("population")
 data("products")
-
+head(population)
+head(injuries)
+head(products)
 ```
 
 ## The intended final products
@@ -56,3 +56,15 @@ The possible coding challenges could be connected the three datasets together fo
 * Nov 16-22	Clean and analyze the data; achieve visualization and description
 * Nov 23-Dec 4	Build website; Written report giving detailed project description
 * Dec 10	“In class” discussion of projects
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
