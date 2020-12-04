@@ -4,11 +4,11 @@ output:
   html_document:
     theme: journal
 ---
-## Exploring consumer product-related injuries in the United States using [National Electronic Injury Surveillance System (NEISS)](https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data/) data. 
+### Exploring consumer product-related injuries in the United States using National Electronic Injury Surveillance System (NEISS) data. 
 
-**Lin Feng (LF2649), Eric Sun (ES3201), Elizabeth Park (EP2899), Daniel Ojeranti (DO2381)**
+**Lin Feng (LF2649) | Eric Sun (ES3201) | Elizabeth Park (EP2899) | Daniel Ojeranti (DO2381)**
 
 <br>
 
 <center>
-<img src="image/home_pic.jpg" style="width:`150%">  
+<img src="image/home_pic.jpg" style="width:`150%">
