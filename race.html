@@ -392,7 +392,7 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="https://github.com/Lin322/final_prj">
+  <a href="https://github.com/Lin322/p8105_final_prj">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -411,7 +411,106 @@ div.tocify {
 </div>
 
 
+<div id="head-and-neck-injuries-by-race-requiring-admission-between-2013-2017" class="section level2">
+<h2>Head and Neck Injuries by Race Requiring Admission Between 2013-2017</h2>
+<pre class="r"><code>race_headdf=
+race_head %&gt;%
+filter(body_part %in% c (&quot;Head&quot;, &quot;Face&quot;, &quot;Neck&quot;,  &quot;Ear&quot;, &quot;Eyeball&quot;),
+        disposition == &quot;Admitted&quot;) %&gt;%   
+  separate(trmt_date, into = c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;), convert = TRUE) %&gt;% 
+  group_by (body_part) %&gt;% 
+  count(race) %&gt;% 
+  arrange(race) %&gt;% 
+  pivot_wider(
+  names_from = &quot;race&quot;, 
+  values_from = &quot;n&quot;) %&gt;% 
+     knitr::kable(digits = 2)
 
+race_headdf</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">body_part</th>
+<th align="right">Asian</th>
+<th align="right">Black</th>
+<th align="right">Hispanic</th>
+<th align="right">Not stated</th>
+<th align="right">Other</th>
+<th align="right">Pacific Islander</th>
+<th align="right">White</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Ear</td>
+<td align="right">1</td>
+<td align="right">19</td>
+<td align="right">1</td>
+<td align="right">71</td>
+<td align="right">14</td>
+<td align="right">1</td>
+<td align="right">66</td>
+</tr>
+<tr class="even">
+<td align="left">Eyeball</td>
+<td align="right">3</td>
+<td align="right">50</td>
+<td align="right">NA</td>
+<td align="right">210</td>
+<td align="right">38</td>
+<td align="right">NA</td>
+<td align="right">140</td>
+</tr>
+<tr class="odd">
+<td align="left">Face</td>
+<td align="right">88</td>
+<td align="right">655</td>
+<td align="right">23</td>
+<td align="right">2729</td>
+<td align="right">310</td>
+<td align="right">1</td>
+<td align="right">2722</td>
+</tr>
+<tr class="even">
+<td align="left">Head</td>
+<td align="right">381</td>
+<td align="right">2059</td>
+<td align="right">86</td>
+<td align="right">14549</td>
+<td align="right">1149</td>
+<td align="right">18</td>
+<td align="right">12138</td>
+</tr>
+<tr class="odd">
+<td align="left">Neck</td>
+<td align="right">31</td>
+<td align="right">212</td>
+<td align="right">9</td>
+<td align="right">1464</td>
+<td align="right">65</td>
+<td align="right">1</td>
+<td align="right">1336</td>
+</tr>
+</tbody>
+</table>
+<p>From the table above, we observe that the largest number of head injuries were observed in &quot;Not Stated,&quot; &quot;White,&quot; followed by &quot;Black.&quot;</p>
+</div>
+<div id="summarize-head-injury-requiring-admission-in-each-race-over-2013-2017" class="section level2">
+<h2>Summarize Head Injury Requiring Admission in each Race over 2013-2017</h2>
+<pre class="r"><code>race_head %&gt;%
+filter(body_part %in% c (&quot;Head&quot;),
+        disposition == &quot;Admitted&quot;) %&gt;%   
+  separate(trmt_date, into = c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;), convert = TRUE) %&gt;%
+  select (-month, -day, -race_other, -disposition, -prod1, -prod2) %&gt;% 
+  group_by(body_part, race, year) %&gt;% 
+  count(body_part, name = &quot;Head_Total&quot;) %&gt;% 
+  ggplot(aes(x = year, y = Head_Total, color=race)) + 
+  geom_line()+
+  geom_point()+
+  facet_grid(~ race)+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))</code></pre>
+<p><img src="race_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
+</div>
 
 
 

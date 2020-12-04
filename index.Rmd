@@ -11,4 +11,4 @@ output:
 <br>
 
 <center>
-<img src="image/home_pic.jpg" style="width:`150%">
+<img src="image/home_pic.jpg" style="width:`150%">  
