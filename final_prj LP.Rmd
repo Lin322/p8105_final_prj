@@ -1,0 +1,92 @@
+---
+title: "Consumer product-related injuries in the United States"
+output: github_document
+---
+
+```{r load_libraries}
+library(tidyverse)
+library(readxl)
+library(ggridges)
+library(patchwork)
+library(dplyr)
+
+knitr::opts_chunk$set(
+  fig.width = 16,
+  fig.asp = 1.2,
+  out.width= "90%"
+)
+
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+          
+
+options(
+    ggplot2.continuous.colour= "viridis" ,
+    ggplot2.continuous.fill = "viridis"
+)        
+
+
+scale_colour_discrete = scale_color_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+```
+
+
+```{r}
+library(neiss)
+```
+
+
+```{r}
+data("injuries")
+data("population")
+data("products")
+
+head(population)
+head(injuries)
+head(products)
+```
+
+#Head and Neck Injuries by Race Requiring Admission Between 2013-2017
+```{r}
+race_head=
+  injuries %>% 
+     select(trmt_date, race, race_other, body_part, disposition, prod1, prod2
+  ) 
+```
+
+```{r}
+race_headdf=
+race_head %>%
+filter(body_part %in% c ("Head", "Face", "Neck",  "Ear", "Eyeball"),
+        disposition == "Admitted") %>%   
+  separate(trmt_date, into = c("year", "month", "day"), convert = TRUE) %>% 
+  group_by (body_part) %>% 
+  count(race) %>% 
+  arrange(race) %>% 
+  pivot_wider(
+  names_from = "race", 
+  values_from = "n") %>% 
+     knitr::kable(digits = 2)
+
+race_headdf
+```
+From the table above, we observe that the largest number of head injuries were observed in "Not Stated," "White," followed by "Black."
+
+
+##Summarize Head Injury Requiring Admission in each Race over 2013-2017
+```{r}
+race_head %>%
+filter(body_part %in% c ("Head"),
+        disposition == "Admitted") %>%   
+  separate(trmt_date, into = c("year", "month", "day"), convert = TRUE) %>%
+  select (-month, -day, -race_other, -disposition, -prod1, -prod2) %>% 
+  group_by(body_part, race, year) %>% 
+  count(body_part, name = "Head_Total") %>% 
+  ggplot(aes(x = year, y = Head_Total, color=race)) + 
+  geom_line()+
+  geom_point()+
+  facet_grid(~ race)+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+

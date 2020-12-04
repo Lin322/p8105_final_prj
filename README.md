@@ -1,2 +1,2 @@
-# p8105_final_prj
-Collaborative repository for the final project
+# final_prj
+personal repo for p8105 final proposal

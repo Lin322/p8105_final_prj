@@ -4,59 +4,52 @@ Consumer product-related injuries in the United States
 Group Member:
 -------------
 
+-   Daniel Ojeranti (DO2381)
 -   Lin Feng (LF2649)
+-   Elizabeth Park (EP2899)
+-   Eric Sun (ES3201)
+
+The motivation for this project
+-------------------------------
+
+Product-related injuries does not seem to be uncommon in everyday life. Annually, these product related injuries account for approximately 29% of unintentional injury deaths. We want to investigate the product-related injuries in a relatively large scale and visualize the results in a clear and understandable way for general public, and provide a guideline for prevent further injuries in daily life.
+
+The anticipated data sources
+----------------------------
+
+We plan to use data from [National Electronic Injury Surveillance System (NEISSS)](https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data/) to invistigate the risk of consumer product-related injuries occurring in the United States. NEISS is operated by United States Consumer Product Safety Commission (CPSC) who conducted the statistically valid injury surveillance for more than 45 years.
+
+The dataset we adopted is the NEISS data from 2013 to 2017 as "injuries", together with a product code lookup table as "products" and the population of the US by age, sex, and year as "population". The whole dataset is also available [here](https://github.com/hadley/neiss).
 
 ``` r
 library(neiss)
 ```
 
-We plan to use data from [National Electronic Injury Surveillance System (NEISSS)](https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data/) to invistigate the risk of consumer product-related injuries occurring in the United States. NEISS is operated by United States Consumer Product Safety Commission (CPSC) who conducted the statistically valid injury surveillance for more than 45 years.
-
 ``` r
 data("injuries")
 data("population")
 data("products")
-
-head(population)
 ```
 
-    ## # A tibble: 6 x 4
-    ##    year   age sex          n
-    ##   <int> <int> <chr>    <int>
-    ## 1  2013     0 female 1921491
-    ## 2  2013     0 male   2009717
-    ## 3  2013     1 female 1926877
-    ## 4  2013     1 male   2015564
-    ## 5  2013     2 female 1949297
-    ## 6  2013     2 male   2041998
+The intended final products
+---------------------------
 
-``` r
-head(injuries)
-```
+The intended final product will be a website contains the descriptive information and visualization we got from NEISS data. We plan to add some text descriptions with inline codes in the index page to show the motivation for this project, a brief introduction to the NEISS dataset, the general results of product-related injuries and other necessary information. Plots and tables will be inserted within texts to give a straight-forward display. We expect several other pages connected to the index page and will display the key results we found in more details. The linkage to NEISS website the brief introduction to group member will be added in the home page.
 
-    ## # A tibble: 6 x 18
-    ##   case_num trmt_date     age sex   race  race_other body_part diag  diag_other
-    ##   <chr>    <date>      <dbl> <chr> <chr> <chr>      <chr>     <chr> <chr>     
-    ## 1 1301049~ 2013-01-01 57     Male  White <NA>       Face      Cont~ <NA>      
-    ## 2 1301049~ 2013-01-01  0.583 Fema~ Asian <NA>       Head      Inte~ <NA>      
-    ## 3 1301049~ 2013-01-01 59     Fema~ White <NA>       Lower Tr~ Cont~ <NA>      
-    ## 4 1301049~ 2013-01-01 17     Fema~ White <NA>       Ankle     Stra~ <NA>      
-    ## 5 1301049~ 2013-01-01 38     Male  White <NA>       Finger    Lace~ <NA>      
-    ## 6 1301049~ 2013-01-01 39     Fema~ White <NA>       Wrist     Frac~ <NA>      
-    ## # ... with 9 more variables: disposition <chr>, location <chr>, fmv <chr>,
-    ## #   prod1 <dbl>, prod2 <dbl>, stratum <chr>, psu <dbl>, weight <dbl>,
-    ## #   narrative <chr>
+The planned analyses / visualizations / coding challenges
+---------------------------------------------------------
 
-``` r
-head(products)
-```
+We will firstly import and tidy it. Then we are going to look at the distribution of injuries related to different categories of products, giving a descriptive summary of the size and structure of the dataset. After the general analysis, we will try to find some special pattern or unusual distribution within the dataset. For example, we want to know which category of product is related to the highest probability of injury, or which age range is the most vulnerable to product-related injuries.
 
-    ## # A tibble: 6 x 2
-    ##    code title                                   
-    ##   <int> <chr>                                   
-    ## 1   101 washing machines without wringers or oth
-    ## 2   102 wringer washing machines                
-    ## 3   103 washing machines with unheated spin drye
-    ## 4   106 electric clothes dryers without washers 
-    ## 5   107 gas clothes dryers without washers      
-    ## 6   108 mangle irons
+Visualization will be achieved via both general plots and interactive plots. We will choose the most appropriate plot form for each result. If applicable, we prefer interactive plot to general plot.
+
+The possible coding challenges could be connected the three datasets together for comprehensive analysis, because there is no common columns can be used for join.
+
+The planned timeline
+--------------------
+
+-   Nov 7, 2020. Draft proposal
+-   Nov 10-13 Project review meeting with TA
+-   Nov 16-22 Clean and analyze the data; achieve visualization and description
+-   Nov 23-Dec 4 Build website; Written report giving detailed project description
+-   Dec 10 “In class” discussion of projects
