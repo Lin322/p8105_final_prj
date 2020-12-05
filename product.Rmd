@@ -1,5 +1,5 @@
 ---
-title: "**Injuries Visualization by Race**"
+title: "**Injuries Visualization by Product**"
 output: 
   html_document:
     toc: true
@@ -12,8 +12,10 @@ library(lubridate)
 library(patchwork)
 
 knitr::opts_chunk$set(
-  fig.width = 6,
+  fig.height = 12,
+  fig.width = 12,
   fig.asp = .6,
+  out.height= "90%",
   out.width = "90%"
 )
 
@@ -72,7 +74,8 @@ all_severity = prod_headdf %>%
   filter(total>5000) %>%
   ggplot(aes(x=title, y= total, fill=body_part)) +
   geom_col(alpha = .5)+
-  labs(title = "Injuries by product, all severity",
+  coord_flip() +
+  labs(title = "All severity",
     x = "Product",
        y = "Number of injuries",
        caption = "Data from NEISS, 2013-2017")+
@@ -87,7 +90,8 @@ admissions_only = prod_headdf %>%
   filter(total>500) %>%
   ggplot(aes(x=title, y= total, fill=body_part)) +
   geom_col(alpha = .5)+
-  labs(title = "Injuries by product, admissions only",
+  coord_flip() +
+  labs(title = "Admissions only",
     x = "Product",
        y = "Number of injuries",
        caption = "Data from NEISS, 2013-2017")+
