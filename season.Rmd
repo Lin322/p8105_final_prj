@@ -1,5 +1,5 @@
 ---
-title: "****"
+title: "**Exploring Injuries by Season**"
 output: 
   html_document:
     toc: true
@@ -40,7 +40,7 @@ head(injuries)
 head(products)
 ```
 
-```{r}
+```{r, echo = F, message = FALSE, warning=FALSE}
 test = injuries %>% 
   select(code = prod1, everything())
 
@@ -59,17 +59,16 @@ season.df =
 ```
 
 # Seasons corresponding to the number of cases
-```{r}
+```{r, echo = F, message = FALSE}
 season.df %>% 
   count(season) %>% 
   arrange(desc(n)) %>% 
   knitr::kable()
 ```
 
-
 # Injuries cases with 30 or more deaths
 
-```{r}
+```{r, echo = F, message = FALSE}
 season.df %>%
   filter(disposition == "Died") %>% 
   count(title) %>% 
@@ -87,7 +86,7 @@ season.df %>%
 
 ## Winter
 
-```{r}
+```{r, echo = F, message = FALSE}
 season.df %>%
   filter(season == "Winter") %>% 
   count(body_part) %>% 
@@ -101,7 +100,7 @@ season.df %>%
 
 ## Spring
 
-```{r}
+```{r, echo = F, message = FALSE}
   season.df %>%
   filter(season == "Spring") %>% 
   count(body_part) %>% 
@@ -115,7 +114,7 @@ season.df %>%
 
 ## Summer
 
-```{r}
+```{r, echo = F, message = FALSE}
   season.df %>%
   filter(season == "Summer") %>% 
   count(body_part) %>% 
@@ -130,7 +129,7 @@ season.df %>%
 
 ## Fall
 
-```{r}
+```{r, echo = F, message = FALSE}                                                                                                                                                                                                                                                    
 season.df %>%
   filter(season == "Fall") %>% 
   count(body_part) %>% 
