@@ -4,7 +4,6 @@ output:
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
-    source: embed
 ---
 
 ```{r, setup, echo = F, message = FALSE, warning=FALSE}
@@ -31,17 +30,13 @@ set.seed(0817)
 ```
 
 
-```{r, include=FALSE}
+```{r,  echo = F, message = FALSE, warning=FALSE}
 data("injuries")
 data("population")
 data("products")
-
-head(population)
-head(injuries)
-head(products)
 ```
 
-```{r}
+```{r,  echo = F, message = FALSE, warning=FALSE}
 test = injuries %>% 
   select(code = prod1, everything())
 
@@ -57,29 +52,83 @@ season.df =
       month %in% 6:8  ~ "Summer",
       TRUE ~ "Winter"))
 
+race_head=
+  injuries %>% 
+     select(trmt_date, race, race_other, body_part, disposition, prod1, prod2
+  ) 
+
+neiss_df = 
+  injuries %>% 
+  select(trmt_date, age, sex, race, body_part, diag, disposition, prod1) %>%
+  rename(code = prod1)
+
+neiss_df = left_join(neiss_df, products, by = "code") 
+
+prod_headdf = neiss_df %>%
+  filter(body_part %in% c ("Head", "Face", "Neck",  "Ear", "Eyeball"))
+
 ```
 
-Column {data-width=650}
+Column {data-width=600}
 -----------------------------------------------------------------------
 
-### Chart A
+### Most Common Injured Body Parts by Sex
 
 ```{r}
+prod_headdf %>%
+  group_by(title, diag) %>%
+  summarize(total = n()) %>%
+  mutate(
+    title = fct_reorder(title, desc(total))) %>%
+    filter(total >=5000) %>%
+  ggplot(aes(x = title, y = total, fill = diag)) +
+  geom_col(alpha = .5) +
+  labs(x = "Product",
+       y = "Number of Injuries")+
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), 
+        legend.title = element_blank())
 
 ```
 
-Column {data-width=350}
+Column {data-width=400}
 -----------------------------------------------------------------------
 
-### Chart B
+### Head Injury Requiring Admission in each Race
 
 ```{r}
+
+injuries %>% 
+  group_by (sex) %>% 
+  count(body_part) %>% 
+  arrange(desc(n)) %>% 
+  mutate(
+        body_part = factor(body_part),
+        body_part = fct_reorder(body_part, n)
+    ) %>% 
+  ggplot(aes(x = body_part, y = n)) + 
+  geom_point(aes(color = sex)) +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+
+     labs(x="Body Part", y="N")
+
 
 ```
 
-### Chart C
+### Head and Neck Injuries by Product 
 
 ```{r}
+race_head %>%
+filter(body_part %in% c ("Head"),
+        disposition == "Admitted") %>%   
+  separate(trmt_date, into = c("year", "month", "day"), convert = TRUE) %>%
+  select (-month, -day, -race_other, -disposition, -prod1, -prod2) %>% 
+  group_by(body_part, race, year) %>% 
+  count(body_part, name = "Head_Total") %>% 
+  ggplot(aes(x = year, y = Head_Total, color=race)) + 
+  geom_line()+
+  geom_point()+
+  facet_grid(~ race)+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
 ```
 
