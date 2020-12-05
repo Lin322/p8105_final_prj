@@ -53,7 +53,7 @@ new = merge(test, products, by = "code")
 
 # Distribution of injuries by age stratified by Sex
 
-```{r}
+```{r, echo = F, message = FALSE}
 ggplot(new, aes(x = age, fill = sex)) + 
   geom_histogram()
 ```
@@ -62,7 +62,7 @@ The figure above shows the distribution of injury cases by age stratified by gen
 
 # Plot of most common injured body parts (Overall)
 
-```{r}
+```{r, echo = F, message = FALSE}
 injuries %>% 
   count(body_part) %>% 
   	filter(n > 100000) %>% 
@@ -77,9 +77,11 @@ injuries %>%
     labs(x="Body Part", y="N")
 ```
 
+Head injuries seem to be the top injured body by a substantial amount. We see that this is followed by face injuries which are related to head injuries .It is safe to say that the most injuries that occur affects the face or head.  
+
 ## Top 3 causes for the top three injured body parts
 
-```{r}
+```{r, echo = F, message = FALSE}
 
 new %>% 
 	filter(body_part %in% c("Head", "Face", "Finger")) %>%
@@ -92,10 +94,11 @@ new %>%
 
 ```
 
+We took this a step further and explored the actions that attributed to the the top three injured parts. As we've seen previously, the top three injured body parts are the Head, Face, and Finger. This table shows us the top 3 causes for each of these injuries.
 
 # Plot of most common injured body part for Males
 
-```{r}
+```{r, echo = F, message = FALSE}
 injuries %>% 
   filter(sex == "Male") %>% 
   count(body_part) %>% 
@@ -110,10 +113,11 @@ injuries %>%
      labs(x="Body Part", y="N")
 ```
 
+We then did this process and stratified them by Sex. Above we can see the top 3 injured body parts for males. When we compare this to the overall top 3, we see that they don't differ too much. Head injuries continue to lead by a substantial amount.
+
 ## Table of top 3 causes for the top three injured body parts for Males
 
-```{r}
-
+```{r, echo = F, message = FALSE}
 
 new %>% 
 	filter(sex == "Male", body_part %in% c("Head", "Finger", "Face")) %>%
@@ -125,9 +129,11 @@ new %>%
 	knitr::kable()
 ```
 
+We also decided to break this down and evaluate the top 3 causes for each of the top injured body parts for males. The top causes for Head and Face injuries were floors or flooring materials. For Finger injuries the top cause was knives.
+
 # Table of top 3 causes for the top three injured body parts for Females
 
-```{r}
+```{r, echo = F, message = FALSE}
 
 # Plot of most common injured body part for Females
 
@@ -145,10 +151,11 @@ injuries %>%
 
 ```
 
+Above we can see the top 3 injured body parts for females. When we compare this to the overall top 3, we see that notable difference. Head injuries continue to lead by a substantial amount but we are introduced to Lower Trunk injures at second. We haven't previously seen this before. This is interesting because this brings up discussion about why we see this difference between male and female. 
 
 ## Table of top 3 causes for the top three injured body parts for Females
 
-```{r}
+```{r, echo = F, message = FALSE}
 new %>% 
 	filter(sex == "Female", body_part %in% c("Head", "Lower Trunk", "Face")) %>%
 	group_by(body_part) %>% 
@@ -159,5 +166,7 @@ new %>%
 	knitr::kable()
 
 ```
+
+We also decided to break this down and evaluate the top 3 causes for each of the top injured body parts for females. The top causes for Head and Face injuries were floors or flooring materials. This remained consistent with the top three causes seen by males injuries.In addition, we see that the top cause for lower Lower trunk injury is also floors and flooring material. We can conclude from this information that floors or florring materials are the top cause for injury within the top 3 female injures.
 
 
