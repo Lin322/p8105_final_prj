@@ -95,9 +95,30 @@ admissions_only = prod_headdf %>%
     x = "Product",
        y = "Number of injuries",
        caption = "Data from NEISS, 2013-2017")+
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), 
+        legend.title = element_blank())
   
   all_severity + admissions_only
 ```
 
 From the graph above, we can see that the top 3 injuries continue to be floors, stairs, and beds and they are predominantly causing head injuries, and we can also clearly see that a substantial number of face injuries are also caused by those 3 materials. When looking at the differences between the two graphs, bicycles appear to cause more severe injuries than chairs and ceilings or walls, which are more common overall. In addition, toilets, which are not in the top products overall, appear to be more dangerous after looking at admissions. Overall, the more dangerous products appear to be frequently used furniture, while recreational items including sports like football, soccer, and swimming happen to account for a significant number of minor injuries. Perhaps most surprisingly, ladders, which one would associate with more head/neck injuries, are not in the top overall products and ranked 10/10 in the products leading to admissions.
+
+
+```{r}
+prod_headdf %>%
+  group_by(title, diag) %>%
+  summarize(total = n()) %>%
+  mutate(
+    title = fct_reorder(title, desc(total))) %>%
+    filter(total >=5000) %>%
+  ggplot(aes(x = title, y = total, fill = diag)) +
+  geom_col(alpha = .5) +
+  labs(x = "Product",
+       y = "Number of Injuries")+
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), 
+        legend.title = element_blank())
+
+```
+
+After examining the top products causing head/neck injuries, we then decided to look into the mechanisms of injury. Here, we can see that most diagnoses are "internal organ injury" followed by "laceration" and "contusion or abrasion". It would make sense that these head injuries lead to possible fractures or internal bleeding which justify their severity and require additional caution around these products.
