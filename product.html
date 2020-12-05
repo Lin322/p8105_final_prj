@@ -422,79 +422,111 @@ div.tocify {
 
 <div id="head-and-neck-injuries-by-product-between-2013-2017" class="section level2">
 <h2>Head and Neck Injuries by Product Between 2013-2017</h2>
-<pre class="r"><code>prod_headdf = neiss_df %&gt;%
-  filter(body_part %in% c (&quot;Head&quot;, &quot;Face&quot;, &quot;Neck&quot;,  &quot;Ear&quot;, &quot;Eyeball&quot;))
-
-prod_headdf %&gt;%
-  group_by(body_part, title) %&gt;%
-  summarize(total = n()) %&gt;%
-  arrange(desc(total))</code></pre>
-<pre><code>## `summarise()` regrouping output by &#39;body_part&#39; (override with `.groups` argument)</code></pre>
-<pre><code>## # A tibble: 2,940 x 3
-## # Groups:   body_part [5]
-##    body_part title                                    total
-##    &lt;chr&gt;     &lt;chr&gt;                                    &lt;int&gt;
-##  1 Head      floors or flooring materials             44220
-##  2 Head      stairs or steps                          25817
-##  3 Head      beds or bedframes, other or not spec     25406
-##  4 Face      floors or flooring materials             13909
-##  5 Head      ceilings and walls (part of completed st 11519
-##  6 Head      chairs, other or not specified           11454
-##  7 Head      bicycles and accessories (excl mountain  10689
-##  8 Face      stairs or steps                          10425
-##  9 Face      beds or bedframes, other or not spec     10412
-## 10 Face      tables, not elsewhere classified         10101
-## # ... with 2,930 more rows</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">body_part</th>
+<th align="left">title</th>
+<th align="right">n</th>
+<th align="right">rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Head</td>
+<td align="left">floors or flooring materials</td>
+<td align="right">44220</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Head</td>
+<td align="left">stairs or steps</td>
+<td align="right">25817</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Head</td>
+<td align="left">beds or bedframes, other or not spec</td>
+<td align="right">25406</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Face</td>
+<td align="left">floors or flooring materials</td>
+<td align="right">13909</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Face</td>
+<td align="left">stairs or steps</td>
+<td align="right">10425</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Face</td>
+<td align="left">beds or bedframes, other or not spec</td>
+<td align="right">10412</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Ear</td>
+<td align="left">jewelry</td>
+<td align="right">6573</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Ear</td>
+<td align="left">swimming (activity, apparel or equipment</td>
+<td align="right">5527</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Ear</td>
+<td align="left">paper products</td>
+<td align="right">907</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Neck</td>
+<td align="left">stairs or steps</td>
+<td align="right">3220</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Neck</td>
+<td align="left">floors or flooring materials</td>
+<td align="right">2499</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Neck</td>
+<td align="left">beds or bedframes, other or not spec</td>
+<td align="right">2325</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Eyeball</td>
+<td align="left">workshop grinders, buffers or polishers,</td>
+<td align="right">932</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Eyeball</td>
+<td align="left">welding equipment</td>
+<td align="right">911</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Eyeball</td>
+<td align="left">basketball (activity, apparel or equip.)</td>
+<td align="right">860</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
 <p>From this table, we can see that head injuries from floors or flooring materials make up the most common head/neck injuries, followed by stairs or steps and beds or bedframes. Next, we can see how these data compare when looking only at those injuries severe enough to cause a hospital admission.</p>
-<pre class="r"><code>all_severity = prod_headdf %&gt;%
-  mutate(body_part = factor(body_part, levels = c(&quot;Head&quot;, &quot;Ear&quot;, &quot;Face&quot;,&quot;Neck&quot;,&quot;Eyeball&quot;))) %&gt;%
-  group_by(body_part, title) %&gt;%
-  summarize(total = n()) %&gt;%
-  mutate(title = fct_reorder(title, desc(total)))  %&gt;%
-  filter(total&gt;5000) %&gt;%
-  ggplot(aes(x=title, y= total, fill=body_part)) +
-  geom_col(alpha = .5)+
-  coord_flip() +
-  labs(title = &quot;All severity&quot;,
-    x = &quot;Product&quot;,
-       y = &quot;Number of injuries&quot;,
-       caption = &quot;Data from NEISS, 2013-2017&quot;)+
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))</code></pre>
-<pre><code>## `summarise()` regrouping output by &#39;body_part&#39; (override with `.groups` argument)</code></pre>
-<pre class="r"><code>admissions_only = prod_headdf %&gt;%
-  filter(disposition == &quot;Admitted&quot;) %&gt;%
-  mutate(body_part = factor(body_part, levels = c(&quot;Head&quot;, &quot;Ear&quot;, &quot;Face&quot;,&quot;Neck&quot;,&quot;Eyeball&quot;))) %&gt;%
-  group_by(body_part, title) %&gt;%
-  summarize(total = n()) %&gt;%
-  mutate(title = fct_reorder(title, desc(total)))  %&gt;%
-  filter(total&gt;500) %&gt;%
-  ggplot(aes(x=title, y= total, fill=body_part)) +
-  geom_col(alpha = .5)+
-  coord_flip() +
-  labs(title = &quot;Admissions only&quot;,
-    x = &quot;Product&quot;,
-       y = &quot;Number of injuries&quot;,
-       caption = &quot;Data from NEISS, 2013-2017&quot;)+
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), 
-        legend.title = element_blank())</code></pre>
-<pre><code>## `summarise()` regrouping output by &#39;body_part&#39; (override with `.groups` argument)</code></pre>
-<pre class="r"><code>  all_severity + admissions_only</code></pre>
 <p><img src="product_files/figure-html/unnamed-chunk-5-1.png" width="90%" height="90%" /></p>
 <p>From the graph above, we can see that the top 3 injuries continue to be floors, stairs, and beds and they are predominantly causing head injuries, and we can also clearly see that a substantial number of face injuries are also caused by those 3 materials. When looking at the differences between the two graphs, bicycles appear to cause more severe injuries than chairs and ceilings or walls, which are more common overall. In addition, toilets, which are not in the top products overall, appear to be more dangerous after looking at admissions. Overall, the more dangerous products appear to be frequently used furniture, while recreational items including sports like football, soccer, and swimming happen to account for a significant number of minor injuries. Perhaps most surprisingly, ladders, which one would associate with more head/neck injuries, are not in the top overall products and ranked 10/10 in the products leading to admissions.</p>
-<pre class="r"><code>prod_headdf %&gt;%
-  group_by(title, diag) %&gt;%
-  summarize(total = n()) %&gt;%
-  mutate(
-    title = fct_reorder(title, desc(total))) %&gt;%
-    filter(total &gt;=5000) %&gt;%
-  ggplot(aes(x = title, y = total, fill = diag)) +
-  geom_col(alpha = .5) +
-  labs(x = &quot;Product&quot;,
-       y = &quot;Number of Injuries&quot;)+
-  coord_flip() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), 
-        legend.title = element_blank())</code></pre>
-<pre><code>## `summarise()` regrouping output by &#39;title&#39; (override with `.groups` argument)</code></pre>
 <p><img src="product_files/figure-html/unnamed-chunk-6-1.png" width="90%" height="90%" /></p>
 <p>After examining the top products causing head/neck injuries, we then decided to look into the mechanisms of injury. Here, we can see that most diagnoses are “internal organ injury” followed by “laceration” and “contusion or abrasion”. It would make sense that these head injuries lead to possible fractures or internal bleeding which justify their severity and require additional caution around these products.</p>
 </div>

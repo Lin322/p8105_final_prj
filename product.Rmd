@@ -53,19 +53,23 @@ neiss_df = left_join(neiss_df, products, by = "code")
 ```
 
 ## Head and Neck Injuries by Product Between 2013-2017
-```{r}
+```{r, echo=FALSE, message = FALSE}
 prod_headdf = neiss_df %>%
   filter(body_part %in% c ("Head", "Face", "Neck",  "Ear", "Eyeball"))
 
 prod_headdf %>%
-  group_by(body_part, title) %>%
-  summarize(total = n()) %>%
-  arrange(desc(total))
+  mutate(body_part = factor(body_part, levels = c("Head", "Face", "Ear","Neck","Eyeball"))) %>%
+  group_by(body_part) %>% 
+	count(title) %>% 
+	mutate(rank = min_rank(desc(n))) %>% 
+	filter(rank < 4) %>% 
+	arrange(body_part, rank) %>% 
+	knitr::kable()
 ```
 
 From this table, we can see that head injuries from floors or flooring materials make up the most common head/neck injuries, followed by stairs or steps and beds or bedframes. Next, we can see how these data compare when looking only at those injuries severe enough to cause a hospital admission.
 
-```{r}
+```{r, echo=FALSE, message = FALSE}
 all_severity = prod_headdf %>%
   mutate(body_part = factor(body_part, levels = c("Head", "Ear", "Face","Neck","Eyeball"))) %>%
   group_by(body_part, title) %>%
@@ -104,7 +108,7 @@ admissions_only = prod_headdf %>%
 From the graph above, we can see that the top 3 injuries continue to be floors, stairs, and beds and they are predominantly causing head injuries, and we can also clearly see that a substantial number of face injuries are also caused by those 3 materials. When looking at the differences between the two graphs, bicycles appear to cause more severe injuries than chairs and ceilings or walls, which are more common overall. In addition, toilets, which are not in the top products overall, appear to be more dangerous after looking at admissions. Overall, the more dangerous products appear to be frequently used furniture, while recreational items including sports like football, soccer, and swimming happen to account for a significant number of minor injuries. Perhaps most surprisingly, ladders, which one would associate with more head/neck injuries, are not in the top overall products and ranked 10/10 in the products leading to admissions.
 
 
-```{r}
+```{r, echo=FALSE, message = FALSE}
 prod_headdf %>%
   group_by(title, diag) %>%
   summarize(total = n()) %>%
