@@ -355,35 +355,26 @@ div.tocify {
         <li>
   <a href="about.html">About</a>
 </li>
-<li>
-  <a href="overview.html">Overview</a>
-</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Related Work
+    Data Analysis
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="bodyparts.html">Injuries by body parts</a>
+      <a href="injuries_bysex.html">Exploratory Data Analysis - Sex</a>
     </li>
     <li>
-      <a href="race.html">Injuries by race</a>
+      <a href="season.html">Injuries by Season</a>
     </li>
     <li>
-      <a href="injuries_bysex.html">Injuries Stratified by Sex</a>
+      <a href="product.html">Head/Neck Injuries by Product</a>
     </li>
     <li>
-      <a href="season.html">Injuries Season</a>
-    </li>
-    <li>
-      <a href="product.html">Injuries by Product</a>
+      <a href="race.html">Injuries by Race</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="regression.html">Regression Analysis</a>
 </li>
 <li>
   <a href="report.html">Report</a>
@@ -444,7 +435,7 @@ div.tocify {
 <div id="dataset" class="section level3">
 <h3>Dataset</h3>
 <p>We used data from <a href="https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data/">National Electronic Injury Surveillance System (NEISS)</a> to investigate the risk of consumer product-related injuries occurring in the United States. NEISS is operated by United States Consumer Product Safety Commission (CPSC) who conducted the statistically valid injury surveillance for more than 45 years.</p>
-<p>The dataset we adopted is the NEISS data from 2013 to 2017 as “injuries”, together with a product code lookup table as “products” and the population of the US by age, sex, and year as “population”. The whole dataset is also available <a href="https://github.com/hadley/neiss">here</a>. The “injuries” dataset is the primary dataset containing detailed information about each emergency department encounter such as date, age, sex, race, body part involved, and product involved. We joined the “injuries” dataset to the “products” dataset when examining the product causes of injuries.</p>
+<p>The dataset we adopted is the NEISS data from 2013 to 2017 as &quot;injuries&quot;, together with a product code lookup table as &quot;products&quot; and the population of the US by age, sex, and year as &quot;population&quot;. The whole dataset is also available <a href="https://github.com/hadley/neiss">here</a>. The &quot;injuries&quot; dataset is the primary dataset containing detailed information about each emergency department encounter such as date, age, sex, race, body part involved, and product involved. We joined the &quot;injuries&quot; dataset to the &quot;products&quot; dataset when examining the product causes of injuries.</p>
 </div>
 <div id="exploratory-analysis" class="section level3">
 <h3>Exploratory Analysis</h3>

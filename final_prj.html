@@ -279,26 +279,26 @@ $(document).ready(function () {
         <li>
   <a href="about.html">About</a>
 </li>
-<li>
-  <a href="overview.html">Overview</a>
-</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Related Work
+    Data Analysis
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="bodyparts.html">Injuries by body parts</a>
+      <a href="injuries_bysex.html">Exploratory Data Analysis - Sex</a>
     </li>
     <li>
-      <a href="race.html">Injuries by race</a>
+      <a href="season.html">Injuries by Season</a>
+    </li>
+    <li>
+      <a href="product.html">Head/Neck Injuries by Product</a>
+    </li>
+    <li>
+      <a href="race.html">Injuries by Race</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="regression.html">Regression Analysis</a>
 </li>
 <li>
   <a href="report.html">Report</a>
@@ -359,7 +359,7 @@ $(document).ready(function () {
 </div>
 <div id="the-anticipated-data-sources" class="section level2">
 <h2>The anticipated data sources</h2>
-<p>We plan to use data from <a href="https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data/">National Electronic Injury Surveillance System (NEISSS)</a> to invistigate the risk of consumer product-related injuries occurring in the United States. NEISS is operated by United States Consumer Product Safety Commission (CPSC) who conducted the statistically valid injury surveillance for more than 45 years.</p>
+<p>We plan to use data from <a href="https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data/">National Electronic Injury Surveillance System (NEISSS)</a> to investigate the risk of consumer product-related injuries occurring in the United States. NEISS is operated by United States Consumer Product Safety Commission (CPSC) who conducted the statistically valid injury surveillance for more than 45 years.</p>
 <p>The dataset we adopted is the NEISS data from 2013 to 2017 as &quot;injuries&quot;, together with a product code lookup table as &quot;products&quot; and the population of the US by age, sex, and year as &quot;population&quot;. The whole dataset is also available <a href="https://github.com/hadley/neiss">here</a>.</p>
 <pre class="r"><code>library(neiss)</code></pre>
 <pre class="r"><code>data(&quot;injuries&quot;)
