@@ -11,7 +11,7 @@
 
 
 
-<title>Report</title>
+<title>Injuries Visualization by Product</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -415,58 +415,120 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore"><strong>Report</strong></h1>
+<h1 class="title toc-ignore"><strong>Injuries Visualization by Product</strong></h1>
 
 </div>
 
 
-<div id="project-motivation" class="section level3">
-<h3>Project Motivation</h3>
-<p>Consumer product-related injuries does not seem to be uncommon in everyday life. However, over 13 million people sought care in emergency departments in 2019 in the US due to these injuries. Annually, these product related injuries account for approximately 29% of unintentional injury deaths. Therefore, studying these injuries can lead to significant public health improvements. We want to investigate the product-related injuries in a relatively large scale and visualize the results in a clear, understandable way for public, and provide a guideline for prevent further injuries in daily life.</p>
-<p>This project is also served as the final project for course <a href="https://p8105.com/">P8105 Data Science</a> in 2020 fall semester.</p>
-<div id="related-work" class="section level4">
-<h4>Related work</h4>
-<ul>
-<li><a href="https://www.cpsc.gov/">Consumer Product Safety Commission</a> provides up-to-date information on recalled and potentially dangerous products</li>
-<li><a href="https://injuryfacts.nsc.org/home-and-community/home-and-community-overview/introduction/">National Safety Council</a> provides an overview and more background on preventable injuries</li>
-<li><a href="https://pubmed.ncbi.nlm.nih.gov/25084777/">Cost analysis</a> demonstrates the significant cost of these injuries to the U.S. economy, almost $1 trillion per year</li>
-</ul>
-</div>
-<div id="initial-questions" class="section level4">
-<h4>Initial questions</h4>
-<ul>
-<li>Which products are associated with injury? What about severe injury?</li>
-<li>How are people injured by consumer products? Are there particular body parts that are injured more often or more severely?</li>
-<li>What differences can we find among injuries by sex, race, and other demographic factors?</li>
-</ul>
-</div>
-</div>
-<div id="dataset" class="section level3">
-<h3>Dataset</h3>
-<p>We used data from <a href="https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data/">National Electronic Injury Surveillance System (NEISS)</a> to investigate the risk of consumer product-related injuries occurring in the United States. NEISS is operated by United States Consumer Product Safety Commission (CPSC) who conducted the statistically valid injury surveillance for more than 45 years.</p>
-<p>The dataset we adopted is the NEISS data from 2013 to 2017 as “injuries”, together with a product code lookup table as “products” and the population of the US by age, sex, and year as “population”. The whole dataset is also available <a href="https://github.com/hadley/neiss">here</a>. The “injuries” dataset is the primary dataset containing detailed information about each emergency department encounter such as date, age, sex, race, body part involved, and product involved. We joined the “injuries” dataset to the “products” dataset when examining the product causes of injuries.</p>
-</div>
-<div id="exploratory-analysis" class="section level3">
-<h3>Exploratory Analysis</h3>
-<p>The goal of our project was to take a broad overview of product injuries which included a number of analyses where we analyzed the data by several of the variables in the dataset to identify any unusual or interesting patterns. These initial analyses included stratifying the data by sex, body part, and season. Furthermore, we wanted to understand not just the number of injuries, but also the severity of those injuries. Thus, we added on the disposition category to better distinguish between minor and severe injuries. Due to finding a low number of overall deaths due to consumer products, hospital admission was used as the main indicator of severe injury. In looking at the initial data, we found that head injuries not only made up the largest proportion of injuries by body part, but that they also tended to be more severe, oftentimes leading to admissions. Therefore, we drilled down further into the category of head/neck injuries including head, face, ear, eyeball, and neck injuries to better understand the products behind those injuries and any potential disparities we could find among race/ethnicity.</p>
-</div>
-<div id="discussion" class="section level3">
-<h3>Discussion</h3>
-<p>We found a number of interesting and counterintuitive insights upon looking at the data.</p>
-<ol style="list-style-type: decimal">
-<li><p><strong>Head injuries were both the most common body part involved and the most likely to lead to hospital admission.</strong> This finding surprised us at first because we would have expected extremities such as hands or arms to be most injured by consumer products. However, considering that the database consists of visits to emergency departments, it would make sense that people would be more likely to seek hospital care due to a head injury than an extremity injury if they could treat it at home.</p>
-<ol style="list-style-type: lower-alpha">
-<li><p><em>House furniture and fixtures were most likely to be involved in head/neck injuries.</em> After examining the head/neck data by product, we found that the most common products to cause injuries overall, floors, beds, and stairs, were also the most common products here. In addition, the high number of bathtub and toilet head injuries leading to hospital admission also highlights the importance of taking precautions to avoid possible falls or other head injuries in the bathroom.</p></li>
-<li><p><em>Helmet-wearing is very important for preventing serious head/neck injuries.</em> Bicycles were shown to cause a higher proportion of serious injuries requiring hospital admission despite causing slightly lower overall head/neck injuries, reinforcing the importance of helmet wearing when bike riding.</p></li>
-</ol></li>
-<li><p><strong>Missing race data prevents making strong conclusions about race/ethnicity disparities in consumer product injuries.</strong> When stratifying the data by race/ethnicity, unfortunately we found a large and increasing amount of missing race data over time. Capturing that information in the database will be important for future research purposes to help with targeting specific communities that may be disproportionately impacted by consumer injuries for public health interventions.</p></li>
-<li><p><strong>Significant differences between men and women in product injuries exist, although overall men are injured more often.</strong> In examining the data by sex, we found a number of interesting differences between men and women in their overall patterns of injury. For example, when examining age, men overall had higher numbers of consumer product injuries at younger ages, which then declined across age to where women had more injuries at the older extreme of age.</p>
-<ol style="list-style-type: lower-alpha">
-<li><em>While both men and women had mostly head and face injuries, men report greater finger injuries while women report greater lower trunk injuries.</em> The difference appears to be linked to greater knife, basketball, and door finger injuries in men, while women report lower trunk injuries due to floors, stairs, and beds.</li>
-</ol></li>
-<li><p><strong>Warmer weather is associated with greater injuries.</strong> Our analysis of the data shows that the spring and summer months are associated with greater injuries, perhaps not surprisingly as people tend to be more active.</p></li>
-<li><p><strong>Consumer product deaths are low overall.</strong> When examining deaths associated with consumer products, the numbers were very low overall compared to the total. As expected, the main products were floors, beds, and stairs which were associated with higher overall injuries. However, the next most common findings were fire, bicycles, and exercise equipment. These findings indicate the importance of proper public health messaging with regard to fire safety, helmet wearing, and safe exercise to reduce these rare but tragically preventable deaths.</p></li>
-</ol>
+<div id="head-and-neck-injuries-by-product-between-2013-2017" class="section level2">
+<h2>Head and Neck Injuries by Product Between 2013-2017</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">body_part</th>
+<th align="left">title</th>
+<th align="right">n</th>
+<th align="right">rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Head</td>
+<td align="left">floors or flooring materials</td>
+<td align="right">44220</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Head</td>
+<td align="left">stairs or steps</td>
+<td align="right">25817</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Head</td>
+<td align="left">beds or bedframes, other or not spec</td>
+<td align="right">25406</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Face</td>
+<td align="left">floors or flooring materials</td>
+<td align="right">13909</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Face</td>
+<td align="left">stairs or steps</td>
+<td align="right">10425</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Face</td>
+<td align="left">beds or bedframes, other or not spec</td>
+<td align="right">10412</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Ear</td>
+<td align="left">jewelry</td>
+<td align="right">6573</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Ear</td>
+<td align="left">swimming (activity, apparel or equipment</td>
+<td align="right">5527</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Ear</td>
+<td align="left">paper products</td>
+<td align="right">907</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Neck</td>
+<td align="left">stairs or steps</td>
+<td align="right">3220</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Neck</td>
+<td align="left">floors or flooring materials</td>
+<td align="right">2499</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Neck</td>
+<td align="left">beds or bedframes, other or not spec</td>
+<td align="right">2325</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">Eyeball</td>
+<td align="left">workshop grinders, buffers or polishers,</td>
+<td align="right">932</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Eyeball</td>
+<td align="left">welding equipment</td>
+<td align="right">911</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Eyeball</td>
+<td align="left">basketball (activity, apparel or equip.)</td>
+<td align="right">860</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+<p>From this table, we can see that head injuries from floors or flooring materials make up the most common head/neck injuries, followed by stairs or steps and beds or bedframes. Next, we can see how these data compare when looking only at those injuries severe enough to cause a hospital admission.</p>
+<p><img src="product_files/figure-html/unnamed-chunk-5-1.png" width="90%" height="90%" /></p>
+<p>From the graph above, we can see that the top 3 injuries continue to be floors, stairs, and beds and they are predominantly causing head injuries, and we can also clearly see that a substantial number of face injuries are also caused by those 3 materials. When looking at the differences between the two graphs, bicycles appear to cause more severe injuries than chairs and ceilings or walls, which are more common overall. In addition, toilets, which are not in the top products overall, appear to be more dangerous after looking at admissions. Overall, the more dangerous products appear to be frequently used furniture, while recreational items including sports like football, soccer, and swimming happen to account for a significant number of minor injuries. Perhaps most surprisingly, ladders, which one would associate with more head/neck injuries, are not in the top overall products and ranked 10/10 in the products leading to admissions.</p>
+<p><img src="product_files/figure-html/unnamed-chunk-6-1.png" width="90%" height="90%" /></p>
+<p>After examining the top products causing head/neck injuries, we then decided to look into the mechanisms of injury. Here, we can see that most diagnoses are “internal organ injury” followed by “laceration” and “contusion or abrasion”. It would make sense that these head injuries lead to possible fractures or internal bleeding which justify their severity and require additional caution around these products.</p>
 </div>
 
 

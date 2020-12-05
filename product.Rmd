@@ -1,0 +1,128 @@
+---
+title: "**Injuries Visualization by Product**"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r load_libraries, include=FALSE}
+library(tidyverse)
+library(lubridate)
+library(patchwork)
+
+knitr::opts_chunk$set(
+  fig.height = 12,
+  fig.width = 12,
+  fig.asp = .6,
+  out.height= "90%",
+  out.width = "90%"
+)
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+```
+
+
+```{r, include=FALSE}
+library(neiss)
+```
+
+```{r, include=FALSE}
+data(injuries)
+data(products)
+data(population)
+```
+
+```{r, include=FALSE}
+neiss_df = 
+  injuries %>% 
+  select(trmt_date, age, sex, race, body_part, diag, disposition, prod1) %>%
+  rename(code = prod1)
+  
+neiss_df = left_join(neiss_df, products, by = "code") 
+
+  
+```
+
+## Head and Neck Injuries by Product Between 2013-2017
+```{r, echo=FALSE, message = FALSE}
+prod_headdf = neiss_df %>%
+  filter(body_part %in% c ("Head", "Face", "Neck",  "Ear", "Eyeball"))
+
+prod_headdf %>%
+  mutate(body_part = factor(body_part, levels = c("Head", "Face", "Ear","Neck","Eyeball"))) %>%
+  group_by(body_part) %>% 
+	count(title) %>% 
+	mutate(rank = min_rank(desc(n))) %>% 
+	filter(rank < 4) %>% 
+	arrange(body_part, rank) %>% 
+	knitr::kable()
+```
+
+From this table, we can see that head injuries from floors or flooring materials make up the most common head/neck injuries, followed by stairs or steps and beds or bedframes. Next, we can see how these data compare when looking only at those injuries severe enough to cause a hospital admission.
+
+```{r, echo=FALSE, message = FALSE}
+all_severity = prod_headdf %>%
+  mutate(body_part = factor(body_part, levels = c("Head", "Ear", "Face","Neck","Eyeball"))) %>%
+  group_by(body_part, title) %>%
+  summarize(total = n()) %>%
+  mutate(title = fct_reorder(title, desc(total)))  %>%
+  filter(total>5000) %>%
+  ggplot(aes(x=title, y= total, fill=body_part)) +
+  geom_col(alpha = .5)+
+  coord_flip() +
+  labs(title = "All severity",
+    x = "Product",
+       y = "Number of injuries",
+       caption = "Data from NEISS, 2013-2017")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+  
+admissions_only = prod_headdf %>%
+  filter(disposition == "Admitted") %>%
+  mutate(body_part = factor(body_part, levels = c("Head", "Ear", "Face","Neck","Eyeball"))) %>%
+  group_by(body_part, title) %>%
+  summarize(total = n()) %>%
+  mutate(title = fct_reorder(title, desc(total)))  %>%
+  filter(total>500) %>%
+  ggplot(aes(x=title, y= total, fill=body_part)) +
+  geom_col(alpha = .5)+
+  coord_flip() +
+  labs(title = "Admissions only",
+    x = "Product",
+       y = "Number of injuries",
+       caption = "Data from NEISS, 2013-2017")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), 
+        legend.title = element_blank())
+  
+  all_severity + admissions_only
+```
+
+From the graph above, we can see that the top 3 injuries continue to be floors, stairs, and beds and they are predominantly causing head injuries, and we can also clearly see that a substantial number of face injuries are also caused by those 3 materials. When looking at the differences between the two graphs, bicycles appear to cause more severe injuries than chairs and ceilings or walls, which are more common overall. In addition, toilets, which are not in the top products overall, appear to be more dangerous after looking at admissions. Overall, the more dangerous products appear to be frequently used furniture, while recreational items including sports like football, soccer, and swimming happen to account for a significant number of minor injuries. Perhaps most surprisingly, ladders, which one would associate with more head/neck injuries, are not in the top overall products and ranked 10/10 in the products leading to admissions.
+
+
+```{r, echo=FALSE, message = FALSE}
+prod_headdf %>%
+  group_by(title, diag) %>%
+  summarize(total = n()) %>%
+  mutate(
+    title = fct_reorder(title, desc(total))) %>%
+    filter(total >=5000) %>%
+  ggplot(aes(x = title, y = total, fill = diag)) +
+  geom_col(alpha = .5) +
+  labs(x = "Product",
+       y = "Number of Injuries")+
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), 
+        legend.title = element_blank())
+
+```
+
+After examining the top products causing head/neck injuries, we then decided to look into the mechanisms of injury. Here, we can see that most diagnoses are "internal organ injury" followed by "laceration" and "contusion or abrasion". It would make sense that these head injuries lead to possible fractures or internal bleeding which justify their severity and require additional caution around these products.

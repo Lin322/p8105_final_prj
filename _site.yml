@@ -5,18 +5,16 @@ navbar:
   right:
     - text: "About"
       href: about.html
-    - text: "Overview"
-      href: overview.html
-    - text: "Related Work"
+    - text: "Data Analysis"
       menu:
-      - text: "Injuries by body parts"
-        href: bodyparts.html
-      - text: "Injuries by race"
-        href: race.html
-      - text: "Injuries Stratified by Sex"
+      - text: "Exploratory Data Analysis - Sex"
         href: injuries_bysex.html
-    - text: "Regression Analysis"
-      href: regression.html
+      - text: "Injuries by Season"
+        href: season.html
+      - text: "Head/Neck Injuries by Product"
+        href: product.html
+      - text: "Injuries by Race"
+        href: race.html
     - text: "Report"
       href: report.html
     - icon: fa-envelope fa-lg

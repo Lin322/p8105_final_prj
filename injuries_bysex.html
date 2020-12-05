@@ -409,13 +409,22 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Injuries Stratified by Sex</h1>
+<h1 class="title toc-ignore"><strong>Injuries Stratified by Sex</strong></h1>
 
 </div>
 
 
-<pre class="r"><code># Plot of most common injured body part overall
-injuries %&gt;% 
+<div id="distribution-of-injuries-by-age-stratified-by-sex" class="section level1">
+<h1>Distribution of injuries by age stratified by Sex</h1>
+<pre class="r"><code>ggplot(new, aes(x = age, fill = sex)) + 
+  geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="injuries_bysex_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
+<p>The figure above shows the distribution of injury cases by age stratified by gender. By the overlap in distributions, we see that there are more female injury cases compare to male injury cases.</p>
+</div>
+<div id="plot-of-most-common-injured-body-parts-overall" class="section level1">
+<h1>Plot of most common injured body parts (Overall)</h1>
+<pre class="r"><code>injuries %&gt;% 
   count(body_part) %&gt;% 
     filter(n &gt; 100000) %&gt;% 
   arrange(desc(n)) %&gt;% 
@@ -425,14 +434,15 @@ injuries %&gt;%
     ) %&gt;% 
   ggplot(aes(x = body_part, y = n)) + 
     geom_point() + 
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))</code></pre>
-<p><img src="injuries_bysex_files/figure-html/unnamed-chunk-2-1.png" width="90%" /></p>
-<pre class="r"><code># Table of top 3 causes for the top three injured body parts
-
-injuries %&gt;% 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+
+    labs(x=&quot;Body Part&quot;, y=&quot;N&quot;)</code></pre>
+<p><img src="injuries_bysex_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+<div id="top-3-causes-for-the-top-three-injured-body-parts" class="section level2">
+<h2>Top 3 causes for the top three injured body parts</h2>
+<pre class="r"><code>new %&gt;% 
     filter(body_part %in% c(&quot;Head&quot;, &quot;Face&quot;, &quot;Finger&quot;)) %&gt;%
     group_by(body_part) %&gt;% 
-    count(prod1) %&gt;% 
+    count(title) %&gt;% 
     mutate(rank = min_rank(desc(n))) %&gt;% 
     filter(rank &lt; 4) %&gt;% 
     arrange(body_part, rank) %&gt;% 
@@ -441,7 +451,7 @@ injuries %&gt;%
 <thead>
 <tr class="header">
 <th align="left">body_part</th>
-<th align="right">prod1</th>
+<th align="left">title</th>
 <th align="right">n</th>
 <th align="right">rank</th>
 </tr>
@@ -449,63 +459,65 @@ injuries %&gt;%
 <tbody>
 <tr class="odd">
 <td align="left">Face</td>
-<td align="right">1807</td>
+<td align="left">floors or flooring materials</td>
 <td align="right">13909</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">Face</td>
-<td align="right">1842</td>
+<td align="left">stairs or steps</td>
 <td align="right">10425</td>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
 <td align="left">Face</td>
-<td align="right">4076</td>
+<td align="left">beds or bedframes, other or not spec</td>
 <td align="right">10412</td>
 <td align="right">3</td>
 </tr>
 <tr class="even">
 <td align="left">Finger</td>
-<td align="right">464</td>
+<td align="left">knives, not elsewhere classified</td>
 <td align="right">25350</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="left">Finger</td>
-<td align="right">1893</td>
+<td align="left">doors, other or not specified</td>
 <td align="right">14924</td>
 <td align="right">2</td>
 </tr>
 <tr class="even">
 <td align="left">Finger</td>
-<td align="right">1205</td>
+<td align="left">basketball (activity, apparel or equip.)</td>
 <td align="right">10751</td>
 <td align="right">3</td>
 </tr>
 <tr class="odd">
 <td align="left">Head</td>
-<td align="right">1807</td>
+<td align="left">floors or flooring materials</td>
 <td align="right">44220</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">Head</td>
-<td align="right">1842</td>
+<td align="left">stairs or steps</td>
 <td align="right">25817</td>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
 <td align="left">Head</td>
-<td align="right">4076</td>
+<td align="left">beds or bedframes, other or not spec</td>
 <td align="right">25406</td>
 <td align="right">3</td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code># Plot of most common injured body part for Males
-
-injuries %&gt;% 
+</div>
+</div>
+<div id="plot-of-most-common-injured-body-part-for-males" class="section level1">
+<h1>Plot of most common injured body part for Males</h1>
+<pre class="r"><code>injuries %&gt;% 
   filter(sex == &quot;Male&quot;) %&gt;% 
   count(body_part) %&gt;% 
   arrange(desc(n)) %&gt;% 
@@ -515,14 +527,15 @@ injuries %&gt;%
     ) %&gt;% 
   ggplot(aes(x = body_part, y = n)) + 
     geom_point() + 
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))</code></pre>
-<p><img src="injuries_bysex_files/figure-html/unnamed-chunk-2-2.png" width="90%" /></p>
-<pre class="r"><code># Table of top 3 causes for the top three injured body parts for Males
-
-injuries %&gt;% 
-    filter(sex == &quot;Male&quot;, body_part %in% c(&quot;Head&quot;, &quot;Face&quot;, &quot;Finger&quot;)) %&gt;%
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+
+     labs(x=&quot;Body Part&quot;, y=&quot;N&quot;)</code></pre>
+<p><img src="injuries_bysex_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
+<div id="table-of-top-3-causes-for-the-top-three-injured-body-parts-for-males" class="section level2">
+<h2>Table of top 3 causes for the top three injured body parts for Males</h2>
+<pre class="r"><code>new %&gt;% 
+    filter(sex == &quot;Male&quot;, body_part %in% c(&quot;Head&quot;, &quot;Finger&quot;, &quot;Face&quot;)) %&gt;%
     group_by(body_part) %&gt;% 
-    count(prod1) %&gt;% 
+    count(title) %&gt;% 
     mutate(rank = min_rank(desc(n))) %&gt;% 
     filter(rank &lt; 4) %&gt;% 
     arrange(body_part, rank) %&gt;% 
@@ -531,7 +544,7 @@ injuries %&gt;%
 <thead>
 <tr class="header">
 <th align="left">body_part</th>
-<th align="right">prod1</th>
+<th align="left">title</th>
 <th align="right">n</th>
 <th align="right">rank</th>
 </tr>
@@ -539,60 +552,64 @@ injuries %&gt;%
 <tbody>
 <tr class="odd">
 <td align="left">Face</td>
-<td align="right">1807</td>
+<td align="left">floors or flooring materials</td>
 <td align="right">6486</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">Face</td>
-<td align="right">4057</td>
+<td align="left">tables, not elsewhere classified</td>
 <td align="right">6269</td>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
 <td align="left">Face</td>
-<td align="right">1842</td>
+<td align="left">stairs or steps</td>
 <td align="right">5660</td>
 <td align="right">3</td>
 </tr>
 <tr class="even">
 <td align="left">Finger</td>
-<td align="right">464</td>
+<td align="left">knives, not elsewhere classified</td>
 <td align="right">14490</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="left">Finger</td>
-<td align="right">1205</td>
+<td align="left">basketball (activity, apparel or equip.)</td>
 <td align="right">8225</td>
 <td align="right">2</td>
 </tr>
 <tr class="even">
 <td align="left">Finger</td>
-<td align="right">1893</td>
+<td align="left">doors, other or not specified</td>
 <td align="right">7420</td>
 <td align="right">3</td>
 </tr>
 <tr class="odd">
 <td align="left">Head</td>
-<td align="right">1807</td>
+<td align="left">floors or flooring materials</td>
 <td align="right">19268</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">Head</td>
-<td align="right">1842</td>
+<td align="left">stairs or steps</td>
 <td align="right">12492</td>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
 <td align="left">Head</td>
-<td align="right">4076</td>
+<td align="left">beds or bedframes, other or not spec</td>
 <td align="right">12430</td>
 <td align="right">3</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div id="table-of-top-3-causes-for-the-top-three-injured-body-parts-for-females" class="section level1">
+<h1>Table of top 3 causes for the top three injured body parts for Females</h1>
 <pre class="r"><code># Plot of most common injured body part for Females
 
 injuries %&gt;% 
@@ -606,13 +623,13 @@ injuries %&gt;%
   ggplot(aes(x = body_part, y = n)) + 
     geom_point() + 
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))</code></pre>
-<p><img src="injuries_bysex_files/figure-html/unnamed-chunk-2-3.png" width="90%" /></p>
-<pre class="r"><code># Table of top 3 causes for the top three injured body parts for Females
-
-injuries %&gt;% 
-    filter(sex == &quot;Female&quot;, body_part %in% c(&quot;Head&quot;, &quot;Face&quot;, &quot;Lower Trunk&quot;)) %&gt;%
+<p><img src="injuries_bysex_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
+<div id="table-of-top-3-causes-for-the-top-three-injured-body-parts-for-females-1" class="section level2">
+<h2>Table of top 3 causes for the top three injured body parts for Females</h2>
+<pre class="r"><code>new %&gt;% 
+    filter(sex == &quot;Female&quot;, body_part %in% c(&quot;Head&quot;, &quot;Lower Trunk&quot;, &quot;Face&quot;)) %&gt;%
     group_by(body_part) %&gt;% 
-    count(prod1) %&gt;% 
+    count(title) %&gt;% 
     mutate(rank = min_rank(desc(n))) %&gt;% 
     filter(rank &lt; 4) %&gt;% 
     arrange(body_part, rank) %&gt;% 
@@ -621,7 +638,7 @@ injuries %&gt;%
 <thead>
 <tr class="header">
 <th align="left">body_part</th>
-<th align="right">prod1</th>
+<th align="left">title</th>
 <th align="right">n</th>
 <th align="right">rank</th>
 </tr>
@@ -629,85 +646,62 @@ injuries %&gt;%
 <tbody>
 <tr class="odd">
 <td align="left">Face</td>
-<td align="right">1807</td>
+<td align="left">floors or flooring materials</td>
 <td align="right">7423</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">Face</td>
-<td align="right">4076</td>
+<td align="left">beds or bedframes, other or not spec</td>
 <td align="right">4838</td>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
 <td align="left">Face</td>
-<td align="right">1842</td>
+<td align="left">stairs or steps</td>
 <td align="right">4765</td>
 <td align="right">3</td>
 </tr>
 <tr class="even">
 <td align="left">Head</td>
-<td align="right">1807</td>
+<td align="left">floors or flooring materials</td>
 <td align="right">24952</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="left">Head</td>
-<td align="right">1842</td>
+<td align="left">stairs or steps</td>
 <td align="right">13324</td>
 <td align="right">2</td>
 </tr>
 <tr class="even">
 <td align="left">Head</td>
-<td align="right">4076</td>
+<td align="left">beds or bedframes, other or not spec</td>
 <td align="right">12976</td>
 <td align="right">3</td>
 </tr>
 <tr class="odd">
 <td align="left">Lower Trunk</td>
-<td align="right">1807</td>
+<td align="left">floors or flooring materials</td>
 <td align="right">15498</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">Lower Trunk</td>
-<td align="right">1842</td>
+<td align="left">stairs or steps</td>
 <td align="right">11668</td>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
 <td align="left">Lower Trunk</td>
-<td align="right">4076</td>
+<td align="left">beds or bedframes, other or not spec</td>
 <td align="right">6770</td>
 <td align="right">3</td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>injuries %&gt;% 
-separate(trmt_date, c(&quot;year&quot;,&quot;month&quot;,&quot;day&quot;), sep = &quot;-&quot;)</code></pre>
-<pre><code>## # A tibble: 1,865,651 x 20
-##    case_num year  month day      age sex   race  race_other body_part diag 
-##    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;
-##  1 1301049~ 2013  01    01    57     Male  White &lt;NA&gt;       Face      Cont~
-##  2 1301049~ 2013  01    01     0.583 Fema~ Asian &lt;NA&gt;       Head      Inte~
-##  3 1301049~ 2013  01    01    59     Fema~ White &lt;NA&gt;       Lower Tr~ Cont~
-##  4 1301049~ 2013  01    01    17     Fema~ White &lt;NA&gt;       Ankle     Stra~
-##  5 1301049~ 2013  01    01    38     Male  White &lt;NA&gt;       Finger    Lace~
-##  6 1301049~ 2013  01    01    39     Fema~ White &lt;NA&gt;       Wrist     Frac~
-##  7 1301049~ 2013  01    01     1.58  Male  Other hisp       All Of B~ Pois~
-##  8 1301050~ 2013  01    01    10     Fema~ Not ~ &lt;NA&gt;       Foot      Stra~
-##  9 1301052~ 2013  01    01    37     Male  White &lt;NA&gt;       Knee      Lace~
-## 10 1301052~ 2013  01    01    34     Male  White &lt;NA&gt;       Ankle     Stra~
-## # ... with 1,865,641 more rows, and 10 more variables: diag_other &lt;chr&gt;,
-## #   disposition &lt;chr&gt;, location &lt;chr&gt;, fmv &lt;chr&gt;, prod1 &lt;dbl&gt;, prod2 &lt;dbl&gt;,
-## #   stratum &lt;chr&gt;, psu &lt;dbl&gt;, weight &lt;dbl&gt;, narrative &lt;chr&gt;</code></pre>
-<pre class="r"><code>injuries %&gt;% 
-  count(age) %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  ggplot(aes(x = age, y = n)) + 
-    geom_point() + 
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))</code></pre>
-<p><img src="injuries_bysex_files/figure-html/unnamed-chunk-2-4.png" width="90%" /></p>
+</div>
+</div>
 
 
 
