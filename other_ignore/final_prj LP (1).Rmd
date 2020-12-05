@@ -1,0 +1,91 @@
+---
+title: "Consumer product-related injuries in the United States"
+output: github_document
+---
+
+```{r load_libraries}
+library(tidyverse)
+library(readxl)
+library(ggridges)
+library(patchwork)
+library(dplyr)
+
+knitr::opts_chunk$set(
+  fig.width = 16,
+  fig.asp = 1.2,
+  out.width= "90%"
+)
+
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+          
+
+options(
+    ggplot2.continuous.colour= "viridis" ,
+    ggplot2.continuous.fill = "viridis"
+)        
+
+
+scale_colour_discrete = scale_color_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+```
+
+
+```{r}
+library(neiss)
+```
+
+
+```{r}
+data("injuries")
+data("population")
+data("products")
+
+head(population)
+head(injuries)
+head(products)
+```
+We decided to focus on potentially deadly or devastating injuries in the head and neck area, requiring hospital admission, between the years 2013-2017. It would be interesting to identify any trends between the various race groups.
+
+#Head and Neck Injuries by Race Requiring Admission Between 2013-2017
+```{r}
+race_head=
+  injuries%>% 
+     select(trmt_date, race, race_other, body_part, disposition, prod1, prod2
+  ) 
+```
+
+```{r}
+race_headdf=
+race_head %>%
+filter(body_part %in% c ("Head", "Face", "Neck",  "Ear", "Eyeball"),
+        disposition == "Admitted") %>%   
+  separate(trmt_date, into = c("year", "month", "day"), convert = TRUE) %>% 
+  group_by (body_part) %>% 
+  count(race) %>% 
+  arrange(race) %>% 
+  pivot_wider(
+  names_from = "race", 
+  values_from = "n") %>% 
+     knitr::kable(digits = 2)
+```
+From the table above, we observe that the Head injuries are the most predominant form of injury in the head and neck area, and the largest 
+number of head injuries were observed in "Not Stated," "White," followed by "Black" race categories. It would be helpful to get a sense of how these head injuries have varied over the 4 years, in each race group. 
+
+##Summarize Head Injury Requiring Admission in each Race over 2013-2017
+```{r}
+race_head %>%
+filter(body_part %in% c ("Head"),
+        disposition == "Admitted") %>%   
+  separate(trmt_date, into = c("year", "month", "day"), convert = TRUE) %>%
+  select (-month, -day, -race_other, -disposition, -prod1, -prod2) %>% 
+  group_by(body_part, race, year) %>% 
+  count(body_part, name = "Head_Total") %>% 
+  ggplot(aes(x = year, y = Head_Total, color=race)) + 
+  geom_line()+
+  geom_point()+
+  facet_grid(~ race)+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+From graph above, we observe that the total number of head injuries have stayed lower at a consistent rate between 2013-2017 in race groups Asian, Black, Hispanic, Other, and Pacific Islander. In the "Not Stated" or Not disclosed race category, the total number of head injuries has been rising steadily from 2013 to 2016 until plateauing in 2017. For the White race cateogry, the total number of head injuries have been declining at a constant rate between 2013 to 2016, and rose from 2016 to 2017. Further categorization and identification of the individuals in the "Not Stated" race group will be important to understand why there was a higher observed prevalence of head injuries and why it continued to rise in this 5 year time period.
+
