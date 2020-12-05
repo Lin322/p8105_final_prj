@@ -11,7 +11,7 @@
 
 
 
-<title>Report</title>
+<title>Final Report</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -377,7 +377,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="report.html">Report</a>
+  <a href="report.html">Final Report</a>
 </li>
 <li>
   <a href="mailto:&lt;fengl3271@gmail.com&gt;">
@@ -406,25 +406,16 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore"><strong>Report</strong></h1>
+<h1 class="title toc-ignore"><strong>Final Report</strong></h1>
 
 </div>
 
 
 <div id="project-motivation" class="section level3">
 <h3>Project Motivation</h3>
-<p>Consumer product-related injuries does not seem to be uncommon in everyday life. However, over 13 million people sought care in emergency departments in 2019 in the US due to these injuries. Annually, these product related injuries account for approximately 29% of unintentional injury deaths. Therefore, studying these injuries can lead to significant public health improvements. We want to investigate the product-related injuries in a relatively large scale and visualize the results in a clear, understandable way for public, and provide a guideline for prevent further injuries in daily life.</p>
-<p>This project is also served as the final project for course <a href="https://p8105.com/">P8105 Data Science</a> in 2020 fall semester.</p>
-<div id="related-work" class="section level4">
-<h4>Related work</h4>
-<ul>
-<li><a href="https://www.cpsc.gov/">Consumer Product Safety Commission</a> provides up-to-date information on recalled and potentially dangerous products</li>
-<li><a href="https://injuryfacts.nsc.org/home-and-community/home-and-community-overview/introduction/">National Safety Council</a> provides an overview and more background on preventable injuries</li>
-<li><a href="https://pubmed.ncbi.nlm.nih.gov/25084777/">Cost analysis</a> demonstrates the significant cost of these injuries to the U.S. economy, almost $1 trillion per year</li>
-</ul>
-</div>
+<p>Consumer product-related injuries does not seem to be uncommon in everyday life. Annually, these product related injuries account for approximately 29% of unintentional injury deaths. We want to investigate the product-related injuries in a relatively large scale and visualize the results in a clear, understandable way for public, and provide a guideline for prevent further injuries in daily life.</p>
 <div id="initial-questions" class="section level4">
-<h4>Initial questions</h4>
+<h4>Initial Questions</h4>
 <ul>
 <li>Which products are associated with injury? What about severe injury?</li>
 <li>How are people injured by consumer products? Are there particular body parts that are injured more often or more severely?</li>
@@ -432,10 +423,18 @@ div.tocify {
 </ul>
 </div>
 </div>
+<div id="related-work" class="section level3">
+<h3>Related Work</h3>
+<ul>
+<li><a href="https://www.cpsc.gov/">Consumer Product Safety Commission</a> provides up-to-date information on recalled and potentially dangerous products</li>
+<li><a href="https://injuryfacts.nsc.org/home-and-community/home-and-community-overview/introduction/">National Safety Council</a> provides an overview and more background on preventable injuries</li>
+<li><a href="https://pubmed.ncbi.nlm.nih.gov/25084777/">Cost analysis</a> demonstrates the significant cost of these injuries to the U.S. economy, almost $1 trillion per year</li>
+</ul>
+</div>
 <div id="dataset" class="section level3">
 <h3>Dataset</h3>
-<p>We used data from <a href="https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data/">National Electronic Injury Surveillance System (NEISS)</a> to investigate the risk of consumer product-related injuries occurring in the United States. NEISS is operated by United States Consumer Product Safety Commission (CPSC) who conducted the statistically valid injury surveillance for more than 45 years.</p>
-<p>The dataset we adopted is the NEISS data from 2013 to 2017 as &quot;injuries&quot;, together with a product code lookup table as &quot;products&quot; and the population of the US by age, sex, and year as &quot;population&quot;. The whole dataset is also available <a href="https://github.com/hadley/neiss">here</a>. The &quot;injuries&quot; dataset is the primary dataset containing detailed information about each emergency department encounter such as date, age, sex, race, body part involved, and product involved. We joined the &quot;injuries&quot; dataset to the &quot;products&quot; dataset when examining the product causes of injuries.</p>
+<p>The dataset we adopted is the <a href="https://www.cpsc.gov/Research--Statistics/NEISS-Injury-Data/">National Electronic Injury Surveillance System (NEISS)</a> data from 2013 to 2017 as &quot;injuries&quot;, together with a product code lookup table as &quot;products&quot; and the population of the US by age, sex, and year as &quot;population&quot;. The &quot;injuries&quot; dataset is the primary dataset containing detailed information about each emergency department encounter such as date, age, sex, race, body part involved, and product involved. We joined the &quot;injuries&quot; dataset to the &quot;products&quot; dataset when examining the product causes of injuries.</p>
+<p>The whole dataset is also available <a href="https://github.com/hadley/neiss">here</a>.</p>
 </div>
 <div id="exploratory-analysis" class="section level3">
 <h3>Exploratory Analysis</h3>

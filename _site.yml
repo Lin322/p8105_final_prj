@@ -15,7 +15,7 @@ navbar:
         href: product.html
       - text: "Injuries by Race"
         href: race.html
-    - text: "Report"
+    - text: "Final Report"
       href: report.html
     - icon: fa-envelope fa-lg
       href: mailto:<fengl3271@gmail.com>
