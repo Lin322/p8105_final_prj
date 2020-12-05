@@ -41,6 +41,11 @@ head(products)
 ```
 
 ```{r}
+test = injuries %>% 
+  select(code = prod1, everything())
+
+new = merge(test, products, by = "code")
+
 season.df = 
   new %>% 
   separate(trmt_date, c("year","month","day"), sep = "-") %>% 
