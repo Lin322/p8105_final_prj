@@ -366,13 +366,16 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="bodyparts.html">Injuries by body parts</a>
-    </li>
-    <li>
-      <a href="race.html">Injuries by race</a>
+      <a href="race.html">Injuries by Race</a>
     </li>
     <li>
       <a href="injuries_bysex.html">Injuries Stratified by Sex</a>
+    </li>
+    <li>
+      <a href="bodyparts.html">Injuries by Body parts</a>
+    </li>
+    <li>
+      <a href="season.html">Injuries Season</a>
     </li>
     <li>
       <a href="product.html">Injuries by Product</a>
@@ -475,7 +478,7 @@ prod_headdf %&gt;%
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))</code></pre>
 <pre><code>## `summarise()` regrouping output by &#39;body_part&#39; (override with `.groups` argument)</code></pre>
 <pre class="r"><code>  all_severity + admissions_only</code></pre>
-<p><img src="product_files/figure-html/unnamed-chunk-5-1.png" width="90%" height="90%" /></p>
+<p><img src="product_files/figure-html/unnamed-chunk-4-1.png" width="90%" height="90%" /></p>
 <p>From the graph above, we can see that the top 3 injuries continue to be floors, stairs, and beds and they are predominantly causing head injuries, and we can also clearly see that a substantial number of face injuries are also caused by those 3 materials. When looking at the differences between the two graphs, bicycles appear to cause more severe injuries than chairs and ceilings or walls, which are more common overall. In addition, toilets, which are not in the top products overall, appear to be more dangerous after looking at admissions. Overall, the more dangerous products appear to be frequently used furniture, while recreational items including sports like football, soccer, and swimming happen to account for a significant number of minor injuries. Perhaps most surprisingly, ladders, which one would associate with more head/neck injuries, are not in the top overall products and ranked 10/10 in the products leading to admissions.</p>
 </div>
 

@@ -366,13 +366,19 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="bodyparts.html">Injuries by body parts</a>
-    </li>
-    <li>
-      <a href="race.html">Injuries by race</a>
+      <a href="race.html">Injuries by Race</a>
     </li>
     <li>
       <a href="injuries_bysex.html">Injuries Stratified by Sex</a>
+    </li>
+    <li>
+      <a href="bodyparts.html">Injuries by Body parts</a>
+    </li>
+    <li>
+      <a href="season.html">Injuries Season</a>
+    </li>
+    <li>
+      <a href="product.html">Injuries by Product</a>
     </li>
   </ul>
 </li>
@@ -416,37 +422,15 @@ div.tocify {
 
 <div id="distribution-of-injuries-by-age-stratified-by-sex" class="section level1">
 <h1>Distribution of injuries by age stratified by Sex</h1>
-<pre class="r"><code>ggplot(new, aes(x = age, fill = sex)) + 
-  geom_histogram()</code></pre>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="injuries_bysex_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
 <p>The figure above shows the distribution of injury cases by age stratified by gender. By the overlap in distributions, we see that there are more female injury cases compare to male injury cases.</p>
 </div>
 <div id="plot-of-most-common-injured-body-parts-overall" class="section level1">
 <h1>Plot of most common injured body parts (Overall)</h1>
-<pre class="r"><code>injuries %&gt;% 
-  count(body_part) %&gt;% 
-    filter(n &gt; 100000) %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  mutate(
-        body_part = factor(body_part),
-        body_part = fct_reorder(body_part, n)
-    ) %&gt;% 
-  ggplot(aes(x = body_part, y = n)) + 
-    geom_point() + 
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+
-    labs(x=&quot;Body Part&quot;, y=&quot;N&quot;)</code></pre>
 <p><img src="injuries_bysex_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+<p>Head injuries seem to be the top injured body by a substantial amount. We see that this is followed by face injuries which are related to head injuries .It is safe to say that the most injuries that occur affects the face or head.</p>
 <div id="top-3-causes-for-the-top-three-injured-body-parts" class="section level2">
 <h2>Top 3 causes for the top three injured body parts</h2>
-<pre class="r"><code>new %&gt;% 
-    filter(body_part %in% c(&quot;Head&quot;, &quot;Face&quot;, &quot;Finger&quot;)) %&gt;%
-    group_by(body_part) %&gt;% 
-    count(title) %&gt;% 
-    mutate(rank = min_rank(desc(n))) %&gt;% 
-    filter(rank &lt; 4) %&gt;% 
-    arrange(body_part, rank) %&gt;% 
-    knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -513,33 +497,15 @@ div.tocify {
 </tr>
 </tbody>
 </table>
+<p>We took this a step further and explored the actions that attributed to the the top three injured parts. As we’ve seen previously, the top three injured body parts are the Head, Face, and Finger. This table shows us the top 3 causes for each of these injuries.</p>
 </div>
 </div>
 <div id="plot-of-most-common-injured-body-part-for-males" class="section level1">
 <h1>Plot of most common injured body part for Males</h1>
-<pre class="r"><code>injuries %&gt;% 
-  filter(sex == &quot;Male&quot;) %&gt;% 
-  count(body_part) %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  mutate(
-        body_part = factor(body_part),
-        body_part = fct_reorder(body_part, n)
-    ) %&gt;% 
-  ggplot(aes(x = body_part, y = n)) + 
-    geom_point() + 
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+
-     labs(x=&quot;Body Part&quot;, y=&quot;N&quot;)</code></pre>
 <p><img src="injuries_bysex_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
+<p>We then did this process and stratified them by Sex. Above we can see the top 3 injured body parts for males. When we compare this to the overall top 3, we see that they don’t differ too much. Head injuries continue to lead by a substantial amount.</p>
 <div id="table-of-top-3-causes-for-the-top-three-injured-body-parts-for-males" class="section level2">
 <h2>Table of top 3 causes for the top three injured body parts for Males</h2>
-<pre class="r"><code>new %&gt;% 
-    filter(sex == &quot;Male&quot;, body_part %in% c(&quot;Head&quot;, &quot;Finger&quot;, &quot;Face&quot;)) %&gt;%
-    group_by(body_part) %&gt;% 
-    count(title) %&gt;% 
-    mutate(rank = min_rank(desc(n))) %&gt;% 
-    filter(rank &lt; 4) %&gt;% 
-    arrange(body_part, rank) %&gt;% 
-    knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -606,34 +572,15 @@ div.tocify {
 </tr>
 </tbody>
 </table>
+<p>We also decided to break this down and evaluate the top 3 causes for each of the top injured body parts for males. The top causes for Head and Face injuries were floors or flooring materials. For Finger injuries the top cause was knives.</p>
 </div>
 </div>
 <div id="table-of-top-3-causes-for-the-top-three-injured-body-parts-for-females" class="section level1">
 <h1>Table of top 3 causes for the top three injured body parts for Females</h1>
-<pre class="r"><code># Plot of most common injured body part for Females
-
-injuries %&gt;% 
-  filter(sex == &quot;Female&quot;) %&gt;% 
-  count(body_part) %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  mutate(
-        body_part = factor(body_part),
-        body_part = fct_reorder(body_part, n)
-    ) %&gt;% 
-  ggplot(aes(x = body_part, y = n)) + 
-    geom_point() + 
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))</code></pre>
 <p><img src="injuries_bysex_files/figure-html/unnamed-chunk-8-1.png" width="90%" /></p>
+<p>Above we can see the top 3 injured body parts for females. When we compare this to the overall top 3, we see that notable difference. Head injuries continue to lead by a substantial amount but we are introduced to Lower Trunk injures at second. We haven’t previously seen this before. This is interesting because this brings up discussion about why we see this difference between male and female.</p>
 <div id="table-of-top-3-causes-for-the-top-three-injured-body-parts-for-females-1" class="section level2">
 <h2>Table of top 3 causes for the top three injured body parts for Females</h2>
-<pre class="r"><code>new %&gt;% 
-    filter(sex == &quot;Female&quot;, body_part %in% c(&quot;Head&quot;, &quot;Lower Trunk&quot;, &quot;Face&quot;)) %&gt;%
-    group_by(body_part) %&gt;% 
-    count(title) %&gt;% 
-    mutate(rank = min_rank(desc(n))) %&gt;% 
-    filter(rank &lt; 4) %&gt;% 
-    arrange(body_part, rank) %&gt;% 
-    knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -700,6 +647,7 @@ injuries %&gt;%
 </tr>
 </tbody>
 </table>
+<p>We also decided to break this down and evaluate the top 3 causes for each of the top injured body parts for females. The top causes for Head and Face injuries were floors or flooring materials. This remained consistent with the top three causes seen by males injuries.In addition, we see that the top cause for lower Lower trunk injury is also floors and flooring material. We can conclude from this information that floors or florring materials are the top cause for injury within the top 3 female injures.</p>
 </div>
 </div>
 

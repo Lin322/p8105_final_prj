@@ -11,7 +11,7 @@
 
 
 
-<title>****</title>
+<title>Exploring Injuries by Season</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -366,16 +366,19 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="bodyparts.html">Injuries by body parts</a>
-    </li>
-    <li>
-      <a href="race.html">Injuries by race</a>
+      <a href="race.html">Injuries by Race</a>
     </li>
     <li>
       <a href="injuries_bysex.html">Injuries Stratified by Sex</a>
     </li>
     <li>
+      <a href="bodyparts.html">Injuries by Body parts</a>
+    </li>
+    <li>
       <a href="season.html">Injuries Season</a>
+    </li>
+    <li>
+      <a href="product.html">Injuries by Product</a>
     </li>
   </ul>
 </li>
@@ -412,31 +415,13 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">****</h1>
+<h1 class="title toc-ignore"><strong>Exploring Injuries by Season</strong></h1>
 
 </div>
 
 
-<pre class="r"><code>test = injuries %&gt;% 
-  select(code = prod1, everything())
-
-new = merge(test, products, by = &quot;code&quot;)
-season.df = 
-  new %&gt;% 
-  separate(trmt_date, c(&quot;year&quot;,&quot;month&quot;,&quot;day&quot;), sep = &quot;-&quot;) %&gt;% 
-  mutate(
-    month = as.double(month),
-      season = case_when(
-      month %in% 9:11 ~ &quot;Fall&quot;,
-      month %in% 3:5  ~ &quot;Spring&quot;,
-      month %in% 6:8  ~ &quot;Summer&quot;,
-      TRUE ~ &quot;Winter&quot;))</code></pre>
 <div id="seasons-corresponding-to-the-number-of-cases" class="section level1">
 <h1>Seasons corresponding to the number of cases</h1>
-<pre class="r"><code>season.df %&gt;% 
-  count(season) %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -466,16 +451,6 @@ season.df =
 </div>
 <div id="injuries-cases-with-30-or-more-deaths" class="section level1">
 <h1>Injuries cases with 30 or more deaths</h1>
-<pre class="r"><code>season.df %&gt;%
-  filter(disposition == &quot;Died&quot;) %&gt;% 
-  count(title) %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  filter(n &gt; 30) %&gt;% 
-  mutate(
-        title = factor(title),
-        title = fct_reorder(title, n)) %&gt;% 
-  rename(&quot;number of deaths&quot;  = n ) %&gt;% 
-    knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -515,15 +490,6 @@ season.df =
 <h1>Injuries By Seasons</h1>
 <div id="winter" class="section level2">
 <h2>Winter</h2>
-<pre class="r"><code>season.df %&gt;%
-  filter(season == &quot;Winter&quot;) %&gt;% 
-  count(body_part) %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  mutate(
-        body_part = factor(body_part),
-        body_part = fct_reorder(body_part, n)
-    ) %&gt;% 
-  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -641,15 +607,6 @@ season.df =
 </div>
 <div id="spring" class="section level2">
 <h2>Spring</h2>
-<pre class="r"><code>  season.df %&gt;%
-  filter(season == &quot;Spring&quot;) %&gt;% 
-  count(body_part) %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  mutate(
-        body_part = factor(body_part),
-        body_part = fct_reorder(body_part, n)
-    ) %&gt;% 
-  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -767,15 +724,6 @@ season.df =
 </div>
 <div id="summer" class="section level2">
 <h2>Summer</h2>
-<pre class="r"><code>  season.df %&gt;%
-  filter(season == &quot;Summer&quot;) %&gt;% 
-  count(body_part) %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  mutate(
-        body_part = factor(body_part),
-        body_part = fct_reorder(body_part, n)
-    ) %&gt;% 
-  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -893,15 +841,6 @@ season.df =
 </div>
 <div id="fall" class="section level2">
 <h2>Fall</h2>
-<pre class="r"><code>season.df %&gt;%
-  filter(season == &quot;Fall&quot;) %&gt;% 
-  count(body_part) %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  mutate(
-        body_part = factor(body_part),
-        body_part = fct_reorder(body_part, n)
-    ) %&gt;% 
-  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">

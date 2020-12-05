@@ -11,7 +11,7 @@
 
 
 
-<title>Overview</title>
+<title>****</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -415,12 +415,89 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore"><strong>Overview</strong></h1>
+<h1 class="title toc-ignore">****</h1>
 
 </div>
 
 
-
+<pre class="r"><code>season.df = 
+  new %&gt;% 
+  separate(trmt_date, c(&quot;year&quot;,&quot;month&quot;,&quot;day&quot;), sep = &quot;-&quot;) %&gt;% 
+  mutate(
+    month = as.double(month),
+      season = case_when(
+      month %in% 9:11 ~ &quot;Fall&quot;,
+      month %in% 3:5  ~ &quot;Spring&quot;,
+      month %in% 6:8  ~ &quot;Summer&quot;,
+      TRUE ~ &quot;Winter&quot;))</code></pre>
+<div id="seasons-corresponding-to-the-number-of-cases" class="section level1">
+<h1>Seasons corresponding to the number of cases</h1>
+<pre class="r"><code>season.df %&gt;% 
+  count(season) %&gt;% 
+  arrange(desc(n))</code></pre>
+<pre><code>##   season      n
+## 1 Summer 504322
+## 2 Spring 486104
+## 3   Fall 475971
+## 4 Winter 399253</code></pre>
+<pre class="r"><code>season.df %&gt;%
+  filter(disposition == &quot;Death&quot;) %&gt;% 
+  count(body_part)</code></pre>
+<pre><code>## [1] body_part n        
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<pre class="r"><code>season.df %&gt;%
+  filter(season == &quot;Winter&quot;) %&gt;% 
+  count(body_part) %&gt;% 
+  arrange(desc(n)) %&gt;% 
+  mutate(
+        body_part = factor(body_part),
+        body_part = fct_reorder(body_part, n)
+    ) %&gt;% 
+  ggplot(aes(x = body_part, y = n)) + 
+    geom_point() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+
+    labs(x=&quot;Body Part&quot;, y=&quot;N&quot;)</code></pre>
+<p><img src="exploring_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
+<pre class="r"><code>  season.df %&gt;%
+  filter(season == &quot;Spring&quot;) %&gt;% 
+  count(body_part) %&gt;% 
+  arrange(desc(n)) %&gt;% 
+  mutate(
+        body_part = factor(body_part),
+        body_part = fct_reorder(body_part, n)
+    ) %&gt;% 
+  ggplot(aes(x = body_part, y = n)) + 
+    geom_point() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+
+    labs(x=&quot;Body Part&quot;, y=&quot;N&quot;)</code></pre>
+<p><img src="exploring_files/figure-html/unnamed-chunk-5-2.png" width="90%" /></p>
+<pre class="r"><code>  season.df %&gt;%
+  filter(season == &quot;Summer&quot;) %&gt;% 
+  count(body_part) %&gt;% 
+  arrange(desc(n)) %&gt;% 
+  mutate(
+        body_part = factor(body_part),
+        body_part = fct_reorder(body_part, n)
+    ) %&gt;% 
+  ggplot(aes(x = body_part, y = n)) + 
+    geom_point() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+
+    labs(x=&quot;Body Part&quot;, y=&quot;N&quot;)</code></pre>
+<p><img src="exploring_files/figure-html/unnamed-chunk-5-3.png" width="90%" /></p>
+<pre class="r"><code>season.df %&gt;%
+  filter(season == &quot;Fall&quot;) %&gt;% 
+  count(body_part) %&gt;% 
+  arrange(desc(n)) %&gt;% 
+  mutate(
+        body_part = factor(body_part),
+        body_part = fct_reorder(body_part, n)
+    ) %&gt;% 
+  ggplot(aes(x = body_part, y = n)) + 
+    geom_point() + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+
+    labs(x=&quot;Body Part&quot;, y=&quot;N&quot;)</code></pre>
+<p><img src="exploring_files/figure-html/unnamed-chunk-5-4.png" width="90%" /></p>
+</div>
 
 
 

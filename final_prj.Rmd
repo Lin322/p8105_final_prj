@@ -21,10 +21,6 @@ We plan to use data from [National Electronic Injury Surveillance System (NEISSS
 The dataset we adopted is the NEISS data from 2013 to 2017 as "injuries", together with a product code lookup table as "products" and the population of the US by age, sex, and year as "population". The whole dataset is also available [here](https://github.com/hadley/neiss). 
  
 
-```{r}
-library(neiss)
-```
-
 
 ```{r}
 data("injuries")

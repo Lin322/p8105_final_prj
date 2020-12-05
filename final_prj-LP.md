@@ -29,10 +29,6 @@ scale_fill_discrete = scale_fill_viridis_d
 ```
 
 ``` r
-library(neiss)
-```
-
-``` r
 data("injuries")
 data("population")
 data("products")
@@ -40,15 +36,15 @@ data("products")
 head(population)
 ```
 
-    ## # A tibble: 6 x 4
-    ##    year   age sex          n
-    ##   <int> <int> <chr>    <int>
-    ## 1  2013     0 female 1921491
-    ## 2  2013     0 male   2009717
-    ## 3  2013     1 female 1926877
-    ## 4  2013     1 male   2015564
-    ## 5  2013     2 female 1949297
-    ## 6  2013     2 male   2041998
+    ## # A tibble: 6 x 3
+    ##   country      year population
+    ##   <chr>       <int>      <int>
+    ## 1 Afghanistan  1995   17586073
+    ## 2 Afghanistan  1996   18415307
+    ## 3 Afghanistan  1997   19021226
+    ## 4 Afghanistan  1998   19496836
+    ## 5 Afghanistan  1999   19987071
+    ## 6 Afghanistan  2000   20595360
 
 ``` r
 head(injuries)
@@ -81,8 +77,7 @@ head(products)
     ## 5   107 gas clothes dryers without washers      
     ## 6   108 mangle irons
 
-Head and Neck Injuries by Race Requiring Admission Between 2013-2017
-====================================================================
+\#Head and Neck Injuries by Race Requiring Admission Between 2013-2017
 
 ``` r
 race_head=
@@ -108,18 +103,19 @@ filter(body_part %in% c ("Head", "Face", "Neck",  "Ear", "Eyeball"),
 race_headdf
 ```
 
-| body\_part |  Asian|  Black|  Hispanic|  Not stated|  Other|  Pacific Islander|  White|
-|:-----------|------:|------:|---------:|-----------:|------:|-----------------:|------:|
-| Ear        |      1|     19|         1|          71|     14|                 1|     66|
-| Eyeball    |      3|     50|        NA|         210|     38|                NA|    140|
-| Face       |     88|    655|        23|        2729|    310|                 1|   2722|
-| Head       |    381|   2059|        86|       14549|   1149|                18|  12138|
-| Neck       |     31|    212|         9|        1464|     65|                 1|   1336|
+| body\_part | Asian | Black | Hispanic | Not stated | Other | Pacific Islander | White |
+| :--------- | ----: | ----: | -------: | ---------: | ----: | ---------------: | ----: |
+| Ear        |     1 |    19 |        1 |         71 |    14 |                1 |    66 |
+| Eyeball    |     3 |    50 |       NA |        210 |    38 |               NA |   140 |
+| Face       |    88 |   655 |       23 |       2729 |   310 |                1 |  2722 |
+| Head       |   381 |  2059 |       86 |      14549 |  1149 |               18 | 12138 |
+| Neck       |    31 |   212 |        9 |       1464 |    65 |                1 |  1336 |
 
-From the table above, we observe that the largest number of head injuries were observed in "Not Stated," "White," followed by "Black."
+From the table above, we observe that the largest number of head
+injuries were observed in “Not Stated,” “White,” followed by “Black.”
 
-Summarize Head Injury Requiring Admission in each Race over 2013-2017
----------------------------------------------------------------------
+\#\#Summarize Head Injury Requiring Admission in each Race over
+2013-2017
 
 ``` r
 race_head %>%
@@ -136,4 +132,4 @@ filter(body_part %in% c ("Head"),
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 ```
 
-<img src="final_prj-LP_files/figure-markdown_github/unnamed-chunk-5-1.png" width="90%" />
+<img src="final_prj-LP_files/figure-gfm/unnamed-chunk-4-1.png" width="90%" />

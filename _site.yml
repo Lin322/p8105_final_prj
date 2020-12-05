@@ -5,16 +5,21 @@ navbar:
   right:
     - text: "About"
       href: about.html
+      
     - text: "Overview"
       href: overview.html
+      
     - text: "Related Work"
       menu:
-      - text: "Injuries by body parts"
-        href: bodyparts.html
-      - text: "Injuries by race"
+      
+      - text: "Injuries by Race"
         href: race.html
+        
       - text: "Injuries Stratified by Sex"
         href: injuries_bysex.html
+      
+      - text: "Injuries by Body parts"
+        href: bodyparts.html
 
       - text: "Injuries Season"
         href: season.html

@@ -32,10 +32,6 @@ scale_fill_discrete = scale_fill_viridis_d
 
 
 ```{r, include=FALSE}
-library(neiss)
-```
-
-```{r, include=FALSE}
 data(injuries)
 data(products)
 data(population)
