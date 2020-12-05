@@ -15,8 +15,13 @@ navbar:
         href: race.html
       - text: "Injuries Stratified by Sex"
         href: injuries_bysex.html
+
+      - text: "Injuries Season"
+        href: season.html
+
       - text: "Injuries by Product"
         href: product.html
+
     - text: "Regression Analysis"
       href: regression.html
     - text: "Report"
