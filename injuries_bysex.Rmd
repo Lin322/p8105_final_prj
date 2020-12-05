@@ -1,0 +1,129 @@
+---
+title: "Injuries Stratified by Sex"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r, setup, echo = F, message = FALSE, warning=FALSE}
+library(tidyverse)
+library(p8105.datasets)
+library(hexbin)
+library(rvest)
+library(ggridges)
+library(patchwork)
+knitr::opts_chunk$set(
+	fig.width = 6, 
+  fig.asp = .6,
+  out.width = "90%"
+)
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+
+set.seed(0817)
+```
+
+
+```{r, include=FALSE}
+data("injuries")
+data("population")
+data("products")
+
+head(population)
+head(injuries)
+head(products)
+```
+
+```{r}
+# Plot of most common injured body part overall
+injuries %>% 
+  count(body_part) %>% 
+  	filter(n > 100000) %>% 
+  arrange(desc(n)) %>% 
+  mutate(
+		body_part = factor(body_part),
+		body_part = fct_reorder(body_part, n)
+	) %>% 
+  ggplot(aes(x = body_part, y = n)) + 
+	geom_point() + 
+	theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+# Table of top 3 causes for the top three injured body parts
+
+injuries %>% 
+	filter(body_part %in% c("Head", "Face", "Finger")) %>%
+	group_by(body_part) %>% 
+	count(prod1) %>% 
+	mutate(rank = min_rank(desc(n))) %>% 
+	filter(rank < 4) %>% 
+	arrange(body_part, rank) %>% 
+	knitr::kable()
+
+# Plot of most common injured body part for Males
+
+injuries %>% 
+  filter(sex == "Male") %>% 
+  count(body_part) %>% 
+  arrange(desc(n)) %>% 
+  mutate(
+		body_part = factor(body_part),
+		body_part = fct_reorder(body_part, n)
+	) %>% 
+  ggplot(aes(x = body_part, y = n)) + 
+	geom_point() + 
+	theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+# Table of top 3 causes for the top three injured body parts for Males
+
+injuries %>% 
+	filter(sex == "Male", body_part %in% c("Head", "Face", "Finger")) %>%
+	group_by(body_part) %>% 
+	count(prod1) %>% 
+	mutate(rank = min_rank(desc(n))) %>% 
+	filter(rank < 4) %>% 
+	arrange(body_part, rank) %>% 
+	knitr::kable()
+
+# Plot of most common injured body part for Females
+
+injuries %>% 
+  filter(sex == "Female") %>% 
+  count(body_part) %>% 
+  arrange(desc(n)) %>% 
+  mutate(
+		body_part = factor(body_part),
+		body_part = fct_reorder(body_part, n)
+	) %>% 
+  ggplot(aes(x = body_part, y = n)) + 
+	geom_point() + 
+	theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+# Table of top 3 causes for the top three injured body parts for Females
+
+injuries %>% 
+	filter(sex == "Female", body_part %in% c("Head", "Face", "Lower Trunk")) %>%
+	group_by(body_part) %>% 
+	count(prod1) %>% 
+	mutate(rank = min_rank(desc(n))) %>% 
+	filter(rank < 4) %>% 
+	arrange(body_part, rank) %>% 
+	knitr::kable()
+
+injuries %>% 
+separate(trmt_date, c("year","month","day"), sep = "-")
+
+injuries %>% 
+  count(age) %>% 
+  arrange(desc(n)) %>% 
+  ggplot(aes(x = age, y = n)) + 
+	geom_point() + 
+	theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+```
+
