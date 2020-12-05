@@ -7,14 +7,14 @@ navbar:
       href: about.html
     - text: "Data Analysis"
       menu:
-      - text: "Exploratory Data Analysis - Sex"
+      - text: "Sex"
         href: injuries_bysex.html
-      - text: "Injuries by Season"
+      - text: "Race"
+        href: race.html      
+      - text: "Season"
         href: season.html
       - text: "Head/Neck Injuries by Product"
         href: product.html
-      - text: "Injuries by Race"
-        href: race.html
     - text: "Dashboard"
       href: dashboard.html
     - text: "Final Report"
@@ -22,7 +22,7 @@ navbar:
     - icon: fa-envelope fa-lg
       href: mailto:<fengl3271@gmail.com>
     - icon: fa-youtube fa-lg
-      href: https://www.youtube.com
+      href: https://www.youtube.com/watch?v=tarMFIatOQY&feature=youtu.be
     - icon: fa-github fa-lg
       href: https://github.com/Lin322/p8105_final_prj
 output:

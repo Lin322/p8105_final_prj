@@ -6,6 +6,9 @@ output:
     toc_float: true
 ---
 
+
+<img src="image/about.jpg" style="width:`100%">  
+
 ###Project Motivation 
 
 Consumer product-related injuries does not seem to be uncommon in everyday life. However, over 13 million people sought care in emergency departments in 2019 in the US due to these injuries. Annually, these product related injuries account for approximately 29% of unintentional injury deaths. Therefore, studying these injuries can lead to significant public health improvements. We want to investigate the product-related injuries in a relatively large scale and visualize the results in a clear, understandable way for public, and provide a guideline for prevent further injuries in daily life. 

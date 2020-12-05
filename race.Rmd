@@ -57,7 +57,7 @@ race_head=
   ) 
 ```
 
-```{r}
+```{r, echo=FALSE, message = FALSE}
 race_headdf=
 race_head %>%
 filter(body_part %in% c ("Head", "Face", "Neck",  "Ear", "Eyeball"),
@@ -78,7 +78,7 @@ number of head injuries were observed in "Not Stated," "White," followed by "Bla
 
 
 ##Summarize Head Injury Requiring Admission in each Race over 2013-2017
-```{r}
+```{r, echo=FALSE, message = FALSE}
 race_head %>%
 filter(body_part %in% c ("Head"),
         disposition == "Admitted") %>%   
