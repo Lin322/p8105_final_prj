@@ -11,7 +11,7 @@
 
 
 
-<title>Consumer product-related injuries in the United States</title>
+<title>Injuries Visualization by Product</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -250,6 +253,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -257,6 +323,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -299,11 +375,7 @@ $(document).ready(function () {
       <a href="injuries_bysex.html">Injuries Stratified by Sex</a>
     </li>
     <li>
-Daniel_work
-      <a href="season.html">Injuries Season</a>
-
       <a href="product.html">Injuries by Product</a>
- main
     </li>
   </ul>
 </li>
@@ -340,21 +412,77 @@ Daniel_work
 
 
 
-<h1 class="title toc-ignore"><strong>Consumer product-related injuries in the United States</strong></h1>
+<h1 class="title toc-ignore"><strong>Injuries Visualization by Product</strong></h1>
 
 </div>
 
 
-<div id="exploring-consumer-product-related-injuries-in-the-united-states-using-national-electronic-injury-surveillance-system-neiss-data." class="section level3">
-<h3>Exploring consumer product-related injuries in the United States using National Electronic Injury Surveillance System (NEISS) data.</h3>
-<p><strong>Lin Feng (LF2649) | Eric Sun (ES3201) | Elizabeth Park (EP2899) | Daniel Ojeranti (DO2381)</strong></p>
-<p><br></p>
-<center>
-<p><img src="image/home_pic.jpg" style="width:`150%"></p>
+<div id="head-and-neck-injuries-by-product-between-2013-2017" class="section level2">
+<h2>Head and Neck Injuries by Product Between 2013-2017</h2>
+<pre class="r"><code>prod_headdf = neiss_df %&gt;%
+  filter(body_part %in% c (&quot;Head&quot;, &quot;Face&quot;, &quot;Neck&quot;,  &quot;Ear&quot;, &quot;Eyeball&quot;))
+
+prod_headdf %&gt;%
+  group_by(body_part, title) %&gt;%
+  summarize(total = n()) %&gt;%
+  arrange(desc(total))</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;body_part&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 2,940 x 3
+## # Groups:   body_part [5]
+##    body_part title                                    total
+##    &lt;chr&gt;     &lt;chr&gt;                                    &lt;int&gt;
+##  1 Head      floors or flooring materials             44220
+##  2 Head      stairs or steps                          25817
+##  3 Head      beds or bedframes, other or not spec     25406
+##  4 Face      floors or flooring materials             13909
+##  5 Head      ceilings and walls (part of completed st 11519
+##  6 Head      chairs, other or not specified           11454
+##  7 Head      bicycles and accessories (excl mountain  10689
+##  8 Face      stairs or steps                          10425
+##  9 Face      beds or bedframes, other or not spec     10412
+## 10 Face      tables, not elsewhere classified         10101
+## # ... with 2,930 more rows</code></pre>
+<p>From this table, we can see that head injuries from floors or flooring materials make up the most common head/neck injuries, followed by stairs or steps and beds or bedframes. Next, we can see how these data compare when looking only at those injuries severe enough to cause a hospital admission.</p>
+<pre class="r"><code>all_severity = prod_headdf %&gt;%
+  mutate(body_part = factor(body_part, levels = c(&quot;Head&quot;, &quot;Ear&quot;, &quot;Face&quot;,&quot;Neck&quot;,&quot;Eyeball&quot;))) %&gt;%
+  group_by(body_part, title) %&gt;%
+  summarize(total = n()) %&gt;%
+  mutate(title = fct_reorder(title, desc(total)))  %&gt;%
+  filter(total&gt;5000) %&gt;%
+  ggplot(aes(x=title, y= total, fill=body_part)) +
+  geom_col(alpha = .5)+
+  coord_flip() +
+  labs(title = &quot;All severity&quot;,
+    x = &quot;Product&quot;,
+       y = &quot;Number of injuries&quot;,
+       caption = &quot;Data from NEISS, 2013-2017&quot;)+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;body_part&#39; (override with `.groups` argument)</code></pre>
+<pre class="r"><code>admissions_only = prod_headdf %&gt;%
+  filter(disposition == &quot;Admitted&quot;) %&gt;%
+  mutate(body_part = factor(body_part, levels = c(&quot;Head&quot;, &quot;Ear&quot;, &quot;Face&quot;,&quot;Neck&quot;,&quot;Eyeball&quot;))) %&gt;%
+  group_by(body_part, title) %&gt;%
+  summarize(total = n()) %&gt;%
+  mutate(title = fct_reorder(title, desc(total)))  %&gt;%
+  filter(total&gt;500) %&gt;%
+  ggplot(aes(x=title, y= total, fill=body_part)) +
+  geom_col(alpha = .5)+
+  coord_flip() +
+  labs(title = &quot;Admissions only&quot;,
+    x = &quot;Product&quot;,
+       y = &quot;Number of injuries&quot;,
+       caption = &quot;Data from NEISS, 2013-2017&quot;)+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;body_part&#39; (override with `.groups` argument)</code></pre>
+<pre class="r"><code>  all_severity + admissions_only</code></pre>
+<p><img src="product_files/figure-html/unnamed-chunk-5-1.png" width="90%" height="90%" /></p>
+<p>From the graph above, we can see that the top 3 injuries continue to be floors, stairs, and beds and they are predominantly causing head injuries, and we can also clearly see that a substantial number of face injuries are also caused by those 3 materials. When looking at the differences between the two graphs, bicycles appear to cause more severe injuries than chairs and ceilings or walls, which are more common overall. In addition, toilets, which are not in the top products overall, appear to be more dangerous after looking at admissions. Overall, the more dangerous products appear to be frequently used furniture, while recreational items including sports like football, soccer, and swimming happen to account for a significant number of minor injuries. Perhaps most surprisingly, ladders, which one would associate with more head/neck injuries, are not in the top overall products and ranked 10/10 in the products leading to admissions.</p>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -387,6 +515,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
